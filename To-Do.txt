@@ -1,0 +1,1 @@
+-   modify get_next_line (malloc error and file errors(empty line/file, EOF))

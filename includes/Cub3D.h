@@ -43,6 +43,14 @@ typedef struct  s_image
 
 }	            t_image;
 
+typedef struct	s_addidtion_map_info
+{
+	char						*direction;
+	char						*texture_path;
+	char						*rgb_color;
+	struct s_addidtion_map_info	*next;
+}				t_addidtion_map_info;
+
 typedef struct  s_map_data
 {
     int     fd;
@@ -53,8 +61,9 @@ typedef struct  s_map_data
 
 typedef struct  s_game
 {
-    t_image     *img;
-    t_map_data  *map;
+    t_image					*img;
+	t_addidtion_map_info	*ad_map;
+    t_map_data				*map;
 }	            t_game;
 
 #endif

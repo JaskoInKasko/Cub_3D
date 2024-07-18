@@ -1,7 +1,8 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 HEAD = ft_printf.h
-SRC = src/main.c
+SRC = src/main.c includes_functions/get_next_line/get_next_line.c\
+includes_functions/get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 NAME = Cub_3D
