@@ -31,7 +31,7 @@
 # define KEY_LEFT 97
 # define KEY_RIGHT 100
 
-typedef enum 
+typedef enum
 {
     SUCCESS,
     ERROR,
