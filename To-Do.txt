@@ -1,1 +1,72 @@
 -   modify get_next_line (malloc error and file errors(empty line/file, EOF))
+
+- ask if    1111111111111111111111111			is an issue
+            1000000000110000000000001
+            1011000001110000000000001
+            1001000000000000000000001
+            111111111011000001110000000000001
+            100000000011000001110111111111111
+            11110111111111011100000010001
+            11110111111111011101010010001
+            11000000110101011100000010001
+            10000000000000001100000010001
+            10000000000000001101010010001
+            11000001110101011111011110N0111
+            11110111 1110101 101111010001
+            11111111 1111111 111111111111
+            (newline)
+
+
+
+
+
+
+
+
+int main()
+{
+    void *mlx;
+    void *win;
+
+    mlx = mlx_init();
+    win = mlx_new_window(mlx, 640, 480, "Hello, MinilibX!");
+    mlx_loop(mlx);
+    return (0);
+}
+
+
+iterate through .cub file:
+// int i = -1;
+// while(cub->map->map_filled[++i])
+//  printf("%s\n", cub->map->map_filled[i]);
+// int i = -1;
+// while(cub->map->map_info[++i])
+// printf("%s\n", cub->map->map_info[i]);
+
+
+// while (cub->map->map_info[str_arr][letter] && cub->map->map_info[str_arr][letter] != ' ')
+// {
+// 	while (cub->map->map_info[str_arr][i] && cub->map->map_info[str_arr][i] != ' ')
+// 		i++;
+// 	begin->direction = (char *)malloc(sizeof(char) * (i + 1));
+// 	if (!begin->direction)
+// 		ft_exit(cub);
+	
+// 	begin->direction[letter + 1] = '\0';
+	
+// 	i = 0;
+// 	letter++;
+// }
+// letter = 0;
+// begin = begin->next;
+
+
+Loop through list (fill_liat()):
+// begin = head;
+// while (begin->next)
+// {
+// 	if (begin->texture_path)
+//     	printf("%s\n", begin->texture_path);
+//     begin = begin->next;
+// }
+

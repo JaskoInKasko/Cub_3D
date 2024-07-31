@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/07/22 12:48:00 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/31 16:29:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@
 # include "../minilibx-linux/mlx.h"
 
 //      ERROR MANAGEMENT
-# define INV_ARGS "Error:\nWrong amount of Arguments. Expected 2!\n"
+# define INV_ARGS	"Error: Wrong amount of Arguments. Expected 2!\n"
+# define MALLOC		"Error: Malloc() function failed!\n"
+# define STRDUP		"Error: ft_strdup() function failed!\n"
+# define OPEN		"Error: open() function failed!\n"
+# define GNL		"Error: get_next_line() function failed!\n"
+# define STRJOIN	"Error: ft_strjoin_free() function failed!\n"
+# define SPLIT		"Error: ft_split() function failed!\n"
+# define EMPTY		"Error: Empty line in map!\n"
+# define FILE		"Error: Map before identifier or invalid character in map!\n"
+# define WALL		"Error: Map must be surrounded by walls!\n"
+# define TAB		"Error: Map contains a Tab!\n"
 
 //		WINDOW MANAGEMENT
 # define PXL 100
@@ -32,12 +42,12 @@
 # define KEY_LEFT 97
 # define KEY_RIGHT 100
 
-typedef enum
-{
-    SUCCESS,
-    ERROR,
-    MALLOC,
-}   num_management;
+// typedef enum
+// {
+//     SUCCESS,
+//     ERROR,
+//     MALLOC,
+// }   num_management;
 
 typedef struct  s_image
 {
@@ -58,8 +68,11 @@ typedef struct  s_map_data
     char    *line_cpy;
     char    **map_filled;
     char    *map_name;
-	char	*map_line;
-	char	**mapfile_info;
+	char	*mapline;
+	char	**map_info;
+	int		line_begin_prev;
+	int		line_begin_cur;
+	int		line_end_prev;
 }               t_map_data;
 
 typedef struct  s_game
@@ -67,10 +80,26 @@ typedef struct  s_game
     t_image					*img;
 	t_addidtion_map_info	*ad_map;
     t_map_data				*map;
+	int						mapline_flag;
 }	            t_game;
 
-void	ft_exit(t_game *cub);
-void	ft_free(t_game *cub);
+//      INITS_ALLOCS
+void	alloc_structs(t_game *cub);
+void	init_structs(t_game *cub, char *argv[]);
 
+//      INIT_UTILS
+int 	is_map_line(t_game *cub, const char *line);
+void	join_fileinfo(t_game *cub, char *line);
+void	split_and_close(t_game *cub);
+void	get_cubfile_info(t_game *cub);
+void	fill_list(t_game *cub);
+
+//		PARSER
+void    check_map(t_game *cub);
+
+//      FINISH
+void	ft_exit(t_game *cub, char *msg);
+void	free_dir(char **dir);
+void	ft_free(t_game *cub);
 
 #endif

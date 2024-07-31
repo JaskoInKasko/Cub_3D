@@ -1,1 +1,5 @@
+init_structs():
 cub->map
+cub->ad_map
+cub->map->line_cpy
+cub->map->map_line
