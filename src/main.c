@@ -8,7 +8,8 @@ int	main(int argc, char *argv[])
 	{
 		alloc_structs(&cub);
 		init_structs(&cub, argv);
-		check_map(&cub);
+		check_map_walls(&cub);
+		check_map_content(&cub);
 		ft_free(&cub);
 	}
 	else

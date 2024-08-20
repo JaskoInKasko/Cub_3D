@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/07/31 16:29:22 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/02 12:23:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define EMPTY		"Error: Empty line in map!\n"
 # define FILE		"Error: Map before identifier or invalid character in map!\n"
 # define WALL		"Error: Map must be surrounded by walls!\n"
-# define TAB		"Error: Map contains a Tab!\n"
+# define TAB		"Error: cubfile contains a Tab!\n"
 
 //		WINDOW MANAGEMENT
 # define PXL 100

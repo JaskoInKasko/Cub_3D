@@ -1,23 +1,24 @@
 #include "../includes/Cub3D.h"
 
+int	has_tab(char *line)
+{
+	while (*line != '\0')
+	{
+        if (*line == '\t')
+            return 0;
+        line++;
+    }
+    return 1;
+}
+
 int is_map_line(t_game *cub, const char *line)
 {
-	const char *line_cpy;
-
-	line_cpy = line;
     while (*(line + 1) != '\n' && *(line) != '\0')
 	{
         if (*line != '1' && *line != '0' && *line != 'N' &&
             *line != 'S' && *line != 'W' && *line != 'E' &&
             *line != ' ')
             return 1;
-        line++;
-    }
-	line = line_cpy;
-	while (*(line + 1) != '\n' && *(line) != '\0')
-	{
-        if (*line == '\t')
-            ft_exit(cub, TAB);
         line++;
     }
     return 0;
@@ -72,6 +73,8 @@ void	get_cubfile_info(t_game *cub)
 		line = get_next_line(cub->map->fd);
 		if (!line)
 			break ;
+		if (has_tab(line) == 0)
+			ft_exit(cub, TAB);
         if (line[0] == '\n' && cub->mapline_flag == 1)
 		{
 			free(line);
@@ -81,6 +84,9 @@ void	get_cubfile_info(t_game *cub)
 		free(line);
 	}
 	split_and_close(cub);
+	int i = -1;
+	while(cub->map->map_filled[++i])
+		printf("%s\n", cub->map->map_filled[i]);
 }
 
 void    fill_list(t_game *cub)
