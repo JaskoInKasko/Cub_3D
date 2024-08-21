@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/08/02 12:23:38 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/21 14:01:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 # define GNL		"Error: get_next_line() function failed!\n"
 # define STRJOIN	"Error: ft_strjoin_free() function failed!\n"
 # define SPLIT		"Error: ft_split() function failed!\n"
-# define EMPTY		"Error: Empty line in map!\n"
+# define EMPTY_M	"Error: Empty line in map!\n"
 # define FILE		"Error: Map before identifier or invalid character in map!\n"
 # define WALL		"Error: Map must be surrounded by walls!\n"
 # define TAB		"Error: cubfile contains a Tab!\n"
+# define EMPTY_F	"Error: Empty file!\n"
+# define MAP		"Error: No map found!\n"
 
 //		WINDOW MANAGEMENT
 # define PXL 100
@@ -74,6 +76,12 @@ typedef struct  s_map_data
 	int		line_begin_cur;
 	int		line_end_prev;
 }               t_map_data;
+typedef struct	s_player
+{
+	int	player_x;
+	int	player_y;
+}				t_player;
+
 
 typedef struct  s_game
 {
@@ -95,7 +103,7 @@ void	get_cubfile_info(t_game *cub);
 void	fill_list(t_game *cub);
 
 //		PARSER
-void    check_map(t_game *cub);
+void    check_map_walls(t_game *cub);
 
 //      FINISH
 void	ft_exit(t_game *cub, char *msg);
