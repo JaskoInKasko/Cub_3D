@@ -71,6 +71,11 @@ void	ft_free(t_game *cub)
         free(cub->ad_map);
         cub->ad_map = NULL;
     }
+    if (cub->player)
+    {
+        free(cub->player);
+        cub->player = NULL;
+    }
 }
 
 void    ft_exit(t_game *cub, char *msg)

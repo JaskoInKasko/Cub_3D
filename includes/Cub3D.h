@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsakanov <jsakanov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/08/21 14:01:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/21 18:31:15 by jsakanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../includes_functions/libft/libft.h"
 # include "../includes_functions/ft_printf/ft_printf.h"
 # include "../includes_functions/get_next_line/get_next_line.h"
-# include "../minilibx-linux/mlx.h"
+// # include "../minilibx-linux/mlx.h"
 
 //      ERROR MANAGEMENT
 # define INV_ARGS	"Error: Wrong amount of Arguments. Expected 2!\n"
@@ -33,6 +33,7 @@
 # define TAB		"Error: cubfile contains a Tab!\n"
 # define EMPTY_F	"Error: Empty file!\n"
 # define MAP		"Error: No map found!\n"
+# define PLAYER		"Error: More then one player in the game!\n"
 
 //		WINDOW MANAGEMENT
 # define PXL 100
@@ -75,6 +76,8 @@ typedef struct  s_map_data
 	int		line_begin_prev;
 	int		line_begin_cur;
 	int		line_end_prev;
+	int		map_rows;
+	int		*map_columns;
 }               t_map_data;
 typedef struct	s_player
 {
@@ -88,6 +91,7 @@ typedef struct  s_game
     t_image					*img;
 	t_addidtion_map_info	*ad_map;
     t_map_data				*map;
+	t_player				*player;
 	int						mapline_flag;
 }	            t_game;
 
@@ -104,6 +108,9 @@ void	fill_list(t_game *cub);
 
 //		PARSER
 void    check_map_walls(t_game *cub);
+
+//		PARSER_UTILS
+void    check_map_content(t_game *cub);
 
 //      FINISH
 void	ft_exit(t_game *cub, char *msg);

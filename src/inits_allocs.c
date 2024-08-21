@@ -4,7 +4,8 @@ void	alloc_structs(t_game *cub)
 {
 	cub->map = (t_map_data *)malloc(sizeof(t_map_data));
 	cub->ad_map = (t_addidtion_map_info *)malloc(sizeof(t_addidtion_map_info));
-	if (!cub->map || !cub->ad_map)
+	cub->player = (t_player *)malloc(sizeof(t_player));
+	if (!cub->map || !cub->ad_map || !cub->player)
 		ft_exit(cub, MALLOC);
 }
 

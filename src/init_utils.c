@@ -130,6 +130,7 @@ void	alloc_new_node(t_game *cub, int istr, t_addidtion_map_info *begin)
         if (!new_node)
             ft_exit(cub, MALLOC);
         begin->next = new_node;
+		free(new_node);
         begin = begin->next;
     }
 	else
@@ -169,6 +170,6 @@ void    fill_list(t_game *cub)
 			|| !ft_strcmp(dir[0], "F") || !ft_strcmp(dir[0], "C"))
 			fill_nodes(begin, dir);
 		alloc_new_node(cub, istr, begin);
+		free_dir(dir);
 	}
-	free_dir(dir);
 }
