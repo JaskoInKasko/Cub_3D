@@ -149,23 +149,32 @@
 //     }
 // }
 
+void ft_img_check(t_game *cub, char *path, void **img)
+{
+	int width;
+	int height;
+
+	*img = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
+	if (img == NULL)
+		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
+}
+
 void ft_load_texture(t_game *cub)
 {
-    int width;
-    int height;
-
-    cub->img.north = mlx_xpm_file_to_image(cub->mlx, "./textures/blue.xpm", &width, &height);
-    cub->img.south = mlx_xpm_file_to_image(cub->mlx, "./textures/brick.xpm", &width, &height);
-    cub->img.east = mlx_xpm_file_to_image(cub->mlx, "./textures/grey.xpm", &width, &height);
-    cub->img.west = mlx_xpm_file_to_image(cub->mlx, "./textures/wood.xpm", &width, &height);
-    cub->img.hitler = mlx_xpm_file_to_image(cub->mlx, "./textures/hitler.xpm", &width, &height);
-    cub->img.door = mlx_xpm_file_to_image(cub->mlx, "./textures/door.xpm", &width, &height);
-    cub->img.pistol = mlx_xpm_file_to_image(cub->mlx, "./textures/pistol_original.xpm", &width, &height);
-    cub->img.scope = mlx_xpm_file_to_image(cub->mlx, "./textures/scope.xpm", &width, &height);
-    cub->img.enemy = mlx_xpm_file_to_image(cub->mlx, "./textures/enemy.xpm", &width, &height);
-    cub->img.mini_floor = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_floor.xpm", &width, &height);
-    cub->img.mini_wall = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_wall.xpm", &width, &height);
-    cub->img.mini_player = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_player.xpm", &width, &height);
+	// int width;
+	// int height;
+	ft_img_check(cub, "./textures/blue.xpm", &cub->img.north);
+	ft_img_check(cub, "./textures/brick.xpm", &cub->img.south);
+	ft_img_check(cub, "./textures/grey.xpm", &cub->img.east);
+	ft_img_check(cub, "./textures/wood.xpm", &cub->img.west);
+	ft_img_check(cub, "./textures/hitler.xpm", &cub->img.hitler);
+	ft_img_check(cub, "./textures/door.xpm", &cub->img.door);
+	ft_img_check(cub, "./textures/pistol_original.xpm", &cub->img.pistol);
+	ft_img_check(cub, "./textures/scope.xpm", &cub->img.scope);
+	ft_img_check(cub, "./textures/enemy.xpm", &cub->img.enemy);
+	ft_img_check(cub, "./textures/mini_floor.xpm", &cub->img.mini_floor);
+	ft_img_check(cub, "./textures/mini_wall.xpm", &cub->img.mini_wall);
+	ft_img_check(cub, "./textures/mini_player.xpm", &cub->img.mini_player);
 
     cub->img.data_south = mlx_get_data_addr(cub->img.south, &cub->img.bits_per_pixel, &cub->img.tex_line_length, &cub->img.endian);
     cub->img.data_north = mlx_get_data_addr(cub->img.north, &cub->img.bits_per_pixel, &cub->img.tex_line_length, &cub->img.endian);

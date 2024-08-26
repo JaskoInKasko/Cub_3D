@@ -92,11 +92,24 @@ void	ft_free_all(t_game *cub)
         free(cub->ad_map);
         cub->ad_map = NULL;
     }
-    // if (cub->player)
-    // {
-    //     free(cub->player);
-    //     cub->player = NULL;
-    // }
+}
+                
+void	ft_destroy_window_and_display(t_game *cub)
+{
+	if (cub->mlx != NULL && cub->win != NULL)
+	{
+		mlx_destroy_window(cub->mlx, cub->win);
+		cub->win = NULL;
+		mlx_destroy_display(cub->mlx);
+		free(cub->mlx);
+		cub->mlx = NULL;
+	}
+	else if (cub->mlx != NULL)
+	{
+		mlx_destroy_display(cub->mlx);
+		free(cub->mlx);
+		cub->mlx = NULL;
+	}
 }
 
 void    ft_exit(t_game *cub, char *msg, int exit_status)
@@ -112,8 +125,9 @@ void    ft_exit(t_game *cub, char *msg, int exit_status)
         fd = 1;
         // exit_code = 1;
     }
+    ft_free_all(cub);
+	ft_destroy_window_and_display(cub);
     if (msg)
         write(fd, msg, ft_strlen(msg));
-    ft_free_all(cub);
     exit(exit_status);
 }

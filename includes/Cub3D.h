@@ -63,6 +63,7 @@
 # define PLAYER		"Error: More then one player in the game!\n"
 # define MLX_INT    "Error: mlx_init() function failed!\n"
 # define MLX_WIN    "Error: mlx_new_window() function failed!\n"
+# define MLX_IMG    "Error: mlx_xpm_file_to_image() function failed!\n"
 
 //      INFORMATION
 # define ESC       "You pressed ESC. Game Over!\n" 
