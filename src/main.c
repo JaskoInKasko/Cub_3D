@@ -154,18 +154,18 @@ void ft_load_texture(t_game *cub)
     int width;
     int height;
 
-    cub->img.north = mlx_xpm_file_to_image(cub->mlx, "textures/blue.xpm", &width, &height);
-    cub->img.south = mlx_xpm_file_to_image(cub->mlx, "textures/brick.xpm", &width, &height);
-    cub->img.east = mlx_xpm_file_to_image(cub->mlx, "textures/grey.xpm", &width, &height);
-    cub->img.west = mlx_xpm_file_to_image(cub->mlx, "textures/wood.xpm", &width, &height);
-    cub->img.hitler = mlx_xpm_file_to_image(cub->mlx, "textures/hitler.xpm", &width, &height);
-    cub->img.door = mlx_xpm_file_to_image(cub->mlx, "textures/door.xpm", &width, &height);
-    cub->img.pistol = mlx_xpm_file_to_image(cub->mlx, "textures/pistol_original.xpm", &width, &height);
-    cub->img.scope = mlx_xpm_file_to_image(cub->mlx, "textures/scope.xpm", &width, &height);
-    cub->img.enemy = mlx_xpm_file_to_image(cub->mlx, "textures/enemy.xpm", &width, &height);
-    cub->img.mini_floor = mlx_xpm_file_to_image(cub->mlx, "textures/mini_floor.xpm", &width, &height);
-    cub->img.mini_wall = mlx_xpm_file_to_image(cub->mlx, "textures/mini_wall.xpm", &width, &height);
-    cub->img.mini_player = mlx_xpm_file_to_image(cub->mlx, "textures/mini_player.xpm", &width, &height);
+    cub->img.north = mlx_xpm_file_to_image(cub->mlx, "./textures/blue.xpm", &width, &height);
+    cub->img.south = mlx_xpm_file_to_image(cub->mlx, "./textures/brick.xpm", &width, &height);
+    cub->img.east = mlx_xpm_file_to_image(cub->mlx, "./textures/grey.xpm", &width, &height);
+    cub->img.west = mlx_xpm_file_to_image(cub->mlx, "./textures/wood.xpm", &width, &height);
+    cub->img.hitler = mlx_xpm_file_to_image(cub->mlx, "./textures/hitler.xpm", &width, &height);
+    cub->img.door = mlx_xpm_file_to_image(cub->mlx, "./textures/door.xpm", &width, &height);
+    cub->img.pistol = mlx_xpm_file_to_image(cub->mlx, "./textures/pistol_original.xpm", &width, &height);
+    cub->img.scope = mlx_xpm_file_to_image(cub->mlx, "./textures/scope.xpm", &width, &height);
+    cub->img.enemy = mlx_xpm_file_to_image(cub->mlx, "./textures/enemy.xpm", &width, &height);
+    cub->img.mini_floor = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_floor.xpm", &width, &height);
+    cub->img.mini_wall = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_wall.xpm", &width, &height);
+    cub->img.mini_player = mlx_xpm_file_to_image(cub->mlx, "./textures/mini_player.xpm", &width, &height);
 
     cub->img.data_south = mlx_get_data_addr(cub->img.south, &cub->img.bits_per_pixel, &cub->img.tex_line_length, &cub->img.endian);
     cub->img.data_north = mlx_get_data_addr(cub->img.north, &cub->img.bits_per_pixel, &cub->img.tex_line_length, &cub->img.endian);
