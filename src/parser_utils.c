@@ -14,13 +14,13 @@ void	check_map_content(t_game *cub)
 			if (cub->map->map_filled[i][i2] == 'N' || cub->map->map_filled[i][i2] == 'S'
 					|| cub->map->map_filled[i][i2] == 'E' || cub->map->map_filled[i][i2] == 'W')
 			{
-				if (cub->player->player_x != 0 || cub->player->player_y != 0)
-					ft_exit(cub, PLAYER);
-				cub->player->player_x = i2;
-				cub->player->player_y = i;
+				if (cub->player.posX != 0 || cub->player.posY != 0)
+					ft_exit(cub, PLAYER, EXIT_FAILURE);
+				cub->player.posX = i2;
+				cub->player.posY = i;
 			}
 		}
 		i2 = -1;
-		cub->map->map_rows++;
+		cub->map->map_row++;
 	}
 }

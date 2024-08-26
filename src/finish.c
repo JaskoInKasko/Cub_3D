@@ -1,5 +1,27 @@
 #include "../includes/Cub3D.h"
 
+void ft_free(char *ptr)
+{
+    if(ptr)
+    {
+        free(ptr);
+        ptr = NULL;
+    }
+}
+
+void ft_free_double(char **ptr)
+{
+    int i;
+
+    i = -1;
+    if(ptr)
+    {
+        while(ptr[++i])
+            ft_free(ptr[i]);
+        free(ptr);
+    }
+}
+
 void err_msg(t_game *cub, char *msg)
 {
     (void)cub;
@@ -47,13 +69,12 @@ static void	ft_free_extend(t_game *cub)
     }
 }
 
-void	ft_free(t_game *cub)
+void	ft_free_all(t_game *cub)
 {
     if (cub->map->line_cpy)
     {
         free(cub->map->line_cpy);
         cub->map->line_cpy = NULL;
-
     }
     if (cub->map->mapline)
     {
@@ -71,16 +92,28 @@ void	ft_free(t_game *cub)
         free(cub->ad_map);
         cub->ad_map = NULL;
     }
-    if (cub->player)
-    {
-        free(cub->player);
-        cub->player = NULL;
-    }
+    // if (cub->player)
+    // {
+    //     free(cub->player);
+    //     cub->player = NULL;
+    // }
 }
 
-void    ft_exit(t_game *cub, char *msg)
+void    ft_exit(t_game *cub, char *msg, int exit_status)
 {
-    err_msg(cub, msg);
-    ft_free(cub);
-    exit(EXIT_FAILURE);
+    int fd;
+    // int exit_code;
+
+    // exit_code = 0;
+    fd = 2;
+    //if(cub->flag->success_flag == TRUE)
+    if (exit_status == EXIT_SUCCESS)
+    {
+        fd = 1;
+        // exit_code = 1;
+    }
+    if (msg)
+        write(fd, msg, ft_strlen(msg));
+    ft_free_all(cub);
+    exit(exit_status);
 }

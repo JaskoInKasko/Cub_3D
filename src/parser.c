@@ -10,7 +10,7 @@ int	get_mapline_begin(t_game *cub, int i, int i2)
         begin++;
 	if (cub->map->map_filled[i][i2] == '\0'
 		|| cub->map->map_filled[i][i2] != '1')
-	 	ft_exit(cub, WALL);
+	 	ft_exit(cub, WALL, EXIT_FAILURE);
 	return (begin);
 }
 
@@ -23,17 +23,17 @@ void	loop_through_map(t_game *cub, int i, int i2)
 			if (cub->map->map_filled[i - 1]
 				&& (!cub->map->map_filled[i - 1][i2]
 					|| cub->map->map_filled[i - 1][i2] == ' '))
-				ft_exit(cub, WALL);
+				ft_exit(cub, WALL, EXIT_FAILURE);
 			else if (cub->map->map_filled[i + 1]
 				&& (!cub->map->map_filled[i + 1][i2]
 					|| cub->map->map_filled[i + 1][i2] == ' '))
-				ft_exit(cub, WALL);
+				ft_exit(cub, WALL, EXIT_FAILURE);
 			else if (!cub->map->map_filled[i][i2 + 1]
 					|| cub->map->map_filled[i][i2 + 1] == '\0')
-				ft_exit(cub, WALL);
+				ft_exit(cub, WALL, EXIT_FAILURE);
 			else if (!cub->map->map_filled[i][i2 - 1]
 					|| cub->map->map_filled[i][i2 - 1] == ' ')
-				ft_exit(cub, WALL);
+				ft_exit(cub, WALL, EXIT_FAILURE);
 		}
         i2++;
 	}
@@ -57,7 +57,7 @@ void    check_map_walls(t_game *cub)
 			{
 				if (cub->map->map_filled[1] && cub->map->map_filled[1][begin]
 					&& cub->map->map_filled[1][begin] == ' ')
-					ft_exit(cub, WALL);
+					ft_exit(cub, WALL, EXIT_FAILURE);
 			}
 		}
 		loop_through_map(cub, i, i2);
