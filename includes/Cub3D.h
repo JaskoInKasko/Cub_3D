@@ -6,7 +6,7 @@
 /*   By: jsakanov <jsakanov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/08/21 18:31:15 by jsakanov         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:04:14 by jsakanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ typedef struct	s_addidtion_map_info
 	char						*direction;
 	char						*texture_path;
 	char						*rgb_color;
+	// int						red;
+	// int						green
+	// int						blue;
 	struct s_addidtion_map_info	*next;
 }				t_addidtion_map_info;
 
