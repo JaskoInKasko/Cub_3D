@@ -20,7 +20,7 @@ void	loop_through_map(t_game *cub, int i, int i2)
 	{
 		if (cub->map->map_filled[i][i2] == '0')
 		{
-			if (cub->map->map_filled[i - 1]
+			if (i > 0 && cub->map->map_filled[i - 1]
 				&& (!cub->map->map_filled[i - 1][i2]
 					|| cub->map->map_filled[i - 1][i2] == ' '))
 				ft_exit(cub, WALL, EXIT_FAILURE);

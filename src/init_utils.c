@@ -18,7 +18,7 @@ int is_map_line(t_game *cub, const char *line)
 	{
         if (*line != '1' && *line != '0' && *line != 'N' &&
             *line != 'S' && *line != 'W' && *line != 'E' &&
-            *line != ' ')
+            *line != ' ' && *line != 'D' && *line != 'C' && *line != 'O' && *line != 'H')
             return 1;
         line++;
     }
@@ -115,9 +115,9 @@ void	get_cubfile_info(t_game *cub)
 		ft_exit(cub, EMPTY_F, EXIT_FAILURE);
 	split_and_close(cub);
 	check_map_size(cub);
-	int i = -1;
-	while(cub->map->map_filled[++i])
-		printf("%s\n", cub->map->map_filled[i]);		//remove later
+	// int i = -1;
+	// while(cub->map->map_filled[++i])
+		// printf("%s\n", cub->map->map_filled[i]);		//remove later
 }
 
 void	alloc_new_node(t_game *cub, int istr, t_addidtion_map_info *begin)
