@@ -14,6 +14,47 @@ void ft_set_text(t_game *cub)
     mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF, "@ Ismayil && Jasmin");
 }
 
+// void draw_sprite(t_game *cub, int x, int y) {
+//     // Calculate sprite position relative to the player
+//     double sprite_x = sprite->x - cub->player.posX;
+//     double sprite_y = sprite->y - cub->player.posY;
+
+//     // Transform sprite position to camera space
+//     double inv_det = 1.0 / (cub->player.plane_x * cub->player.dir_y - cub->player.dir_x * cub->player.plane_y);
+//     double transform_x = inv_det * (cub->player.dir_y * sprite_x - cub->player.dir_x * sprite_y);
+//     double transform_y = inv_det * (-cub->player.plane_y * sprite_x + cub->player.plane_x * sprite_y);
+
+//     // Calculate screen position
+//     int sprite_screen_x = (int)((SCREEN_WIDTH / 2) * (1 + transform_x / transform_y));
+
+//     // Calculate sprite size
+//     int sprite_height = abs((int)(SCREEN_HEIGHT / transform_y));
+//     int draw_start_y = -sprite_height / 2 + SCREEN_HEIGHT / 2;
+//     if (draw_start_y < 0) draw_start_y = 0;
+//     int draw_end_y = sprite_height / 2 + SCREEN_HEIGHT / 2;
+//     if (draw_end_y >= SCREEN_HEIGHT) draw_end_y = SCREEN_HEIGHT - 1;
+
+//     int sprite_width = abs((int)(SCREEN_HEIGHT / transform_y));
+//     int draw_start_x = -sprite_width / 2 + sprite_screen_x;
+//     if (draw_start_x < 0) draw_start_x = 0;
+//     int draw_end_x = sprite_width / 2 + sprite_screen_x;
+//     if (draw_end_x >= SCREEN_WIDTH) draw_end_x = SCREEN_WIDTH - 1;
+
+//     // Draw sprite
+//     for (int stripe = draw_start_x; stripe < draw_end_x; stripe++) {
+//         int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * sprite->texture_width / sprite_width) / 256;
+//         if (transform_y > 0 && stripe > 0 && stripe < SCREEN_WIDTH && transform_y < cub->z_buffer[stripe]) {
+//             for (int y = draw_start_y; y < draw_end_y; y++) {
+//                 int d = (y) * 256 - SCREEN_HEIGHT * 128 + sprite_height * 128;
+//                 int tex_y = ((d * sprite->texture_height) / sprite_height) / 256;
+//                 int color = sprite->texture[tex_x + tex_y * sprite->texture_width];
+//                 if (color != 0x000000) // Check for transparency
+//                     my_mlx_pixel_put(cub, stripe, y, color);
+//             }
+//         }
+//     }
+// }
+
 void ft_draw(t_game *cub)
 {
     int x;
@@ -204,65 +245,5 @@ void ft_draw(t_game *cub)
         x = 0;
         y++;
     }
-    // mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-    // for (int y = 0; y < 24; y++) {
-    //     for (int x = 0; x < 24; x++) {
-
-    //         if(cub->map->map_filled[start_y + y][start_x + x] == '0' || cub->map->map_filled[start_y + y][start_x + x] == 'O')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, start_x * 10 + 640, start_y * 10 + 240);
-    //         }
-    //         else if(cub->map->map_filled[start_y + y][start_x + x] != ' ')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, start_x * 10 + 640, start_y * 10 + 240);
-    //         }
-    //     }
-    // }
-    // x = 0;
-    // y = 0;
-    // while(cub->map->map_filled[y] && y < 24)
-    // {
-    //     int m = y * 10;
-    //     while(cub->map->map_filled[y][x])
-    //     {
-    //         int n = x * 10;
-    //         if(cub->map->map_filled[y][x] == '0' || cub->map->map_filled[y][x] == 'O')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, n + 640, m + 240);
-    //         }
-    //         else if(cub->map->map_filled[y][x] != ' ')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, n + 640, m + 240);
-    //         }
-    //         x = x + 1;
-    //     }
-    //     x = 0;
-    //     y = y + 1;
-    // }
-    // mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-
 }
-
-    // int x = 0;
-    // int y = 0;
-    // while(cub->map->map_filled[y] && y < 24)
-    // {
-    //     int m = y * 10;
-    //     while(cub->map->map_filled[x][y])
-    //     {
-    //         int n = x * 10;
-    //         if(cub->map->map_filled[y][x] == '0' || cub->map->map_filled[startY][startX] == 'O')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, vars->mini_floor, n + 640, m + 240);
-    //         }
-    //         else if(cub->map->map_filled[y][x] != ' ')
-    //         {
-    //             mlx_put_image_to_window(cub->mlx, cub->win, vars->mini_wall, n + 640, m + 240);
-    //         }
-    //         x = x + 1;
-    //     }
-    //     x = 0;
-    //     y = y + 1;
-    // }
-    // mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
 
