@@ -147,28 +147,99 @@ void ft_draw(t_game *cub)
         ft_set_pistol_shoot(cub);
     ft_set_scope(cub);
     mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
+
+    int start_x = cub->player.posX - 12;
+    int start_y = cub->player.posY - 12;
+    int end_x = cub->player.posX + 12;
+    int end_y = cub->player.posY + 12;
+    if (start_x < 0) 
+    {
+        start_x = 0;
+        end_x = 24;
+    }
+    if (start_y < 0) 
+    {
+        start_y = 0;
+        end_y = 24;
+    }
+    if (end_x > 90) //41
+    {
+        end_x = 90; //41
+        start_x = 66; //17
+    }
+    if (end_y > 50) //46
+    {
+        end_y = 50; //46
+        start_y = 26; //22
+    }
     x = 0;
     y = 0;
-    while(cub->map->map_filled[y] && y < 24)
+    int original_start_x = start_x;
+    while(start_y < end_y)
     {
-        int m = y * 10;
-        while(cub->map->map_filled[y][x])
+        start_x = original_start_x;
+        while(start_x < end_x)
         {
-            int n = x * 10;
-            if(cub->map->map_filled[y][x] == '0' || cub->map->map_filled[y][x] == 'O')
+            if ((int)cub->player.posX == start_x && (int)cub->player.posY == start_y)
             {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, n + 640, m + 240);
+                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
             }
-            else if(cub->map->map_filled[y][x] != ' ')
+            else if(cub->map->map_filled[start_y][start_x] == '0' || cub->map->map_filled[start_y][start_x] == 'O')
             {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, n + 640, m + 240);
+                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
             }
-            x = x + 1;
+            else if(cub->map->map_filled[start_y][start_x] != ' ')
+            {
+                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+            }
+            else
+            {
+                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+            }
+            x++;
+            start_x++;
         }
+        start_y++;
+        start_x = cub->player.posX - 12;
         x = 0;
-        y = y + 1;
+        y++;
     }
-    mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+    // mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+    // for (int y = 0; y < 24; y++) {
+    //     for (int x = 0; x < 24; x++) {
+
+    //         if(cub->map->map_filled[start_y + y][start_x + x] == '0' || cub->map->map_filled[start_y + y][start_x + x] == 'O')
+    //         {
+    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, start_x * 10 + 640, start_y * 10 + 240);
+    //         }
+    //         else if(cub->map->map_filled[start_y + y][start_x + x] != ' ')
+    //         {
+    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, start_x * 10 + 640, start_y * 10 + 240);
+    //         }
+    //     }
+    // }
+    // x = 0;
+    // y = 0;
+    // while(cub->map->map_filled[y] && y < 24)
+    // {
+    //     int m = y * 10;
+    //     while(cub->map->map_filled[y][x])
+    //     {
+    //         int n = x * 10;
+    //         if(cub->map->map_filled[y][x] == '0' || cub->map->map_filled[y][x] == 'O')
+    //         {
+    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, n + 640, m + 240);
+    //         }
+    //         else if(cub->map->map_filled[y][x] != ' ')
+    //         {
+    //             mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, n + 640, m + 240);
+    //         }
+    //         x = x + 1;
+    //     }
+    //     x = 0;
+    //     y = y + 1;
+    // }
+    // mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, (int)cub->player.posX * MINI_TEX_WIDTH + SCREEN_WIDTH, (int)cub->player.posY * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
 
 }
 

@@ -107,6 +107,7 @@ typedef struct  s_img
     void *mini_floor;
     void *mini_wall;
     void *mini_player;
+    void *mini_black;
     char *addr;
     char *data_south;
     char *data_north;

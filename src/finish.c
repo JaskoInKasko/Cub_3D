@@ -136,6 +136,7 @@ void ft_destroy_imgs(t_game *cub)
 	ft_destroy_single_img(cub, cub->img.mini_floor);
 	ft_destroy_single_img(cub, cub->img.mini_wall);
 	ft_destroy_single_img(cub, cub->img.mini_player);
+    ft_destroy_single_img(cub, cub->img.mini_black);
 	ft_destroy_single_img(cub, cub->img.img);
 }
 

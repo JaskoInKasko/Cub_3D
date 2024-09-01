@@ -5,7 +5,7 @@ void ft_start_game(t_game *cub)
    	cub->mlx = mlx_init();
 	if (cub->mlx == NULL)
 		ft_exit(cub, MLX_INT, EXIT_FAILURE);
-    cub->win = mlx_new_window(cub->mlx, SCREEN_WIDTH + 480, SCREEN_HEIGHT, "Wolfenstein 3D");
+    cub->win = mlx_new_window(cub->mlx, SCREEN_WIDTH + 240, SCREEN_HEIGHT, "Wolfenstein 3D");
     if(cub->win == NULL)
 		ft_exit(cub, MLX_WIN, EXIT_FAILURE);
 	ft_load_texture(cub);

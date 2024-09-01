@@ -35,6 +35,7 @@ void ft_load_texture(t_game *cub)
 	ft_img_check(cub, "./textures/mini_floor.xpm", &cub->img.mini_floor);
 	ft_img_check(cub, "./textures/mini_wall.xpm", &cub->img.mini_wall);
 	ft_img_check(cub, "./textures/mini_player.xpm", &cub->img.mini_player);
+	ft_img_check(cub, "./textures/mini_black.xpm", &cub->img.mini_black);
 }
 
 void ft_load_texture_data(t_game *cub)
