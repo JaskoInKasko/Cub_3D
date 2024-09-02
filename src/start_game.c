@@ -134,9 +134,9 @@ void ft_draw(t_game *cub)
                 mapY += stepY;
                 side = 1;
             }
-			// if(!cub->map->map_filled[mapX][mapY])
+			// if(!cub->map.map_filled[mapX][mapY])
 			// 	break;
-            if(cub->map->map_filled[mapY][mapX] != '0' && cub->map->map_filled[mapY][mapX] != 'O')
+            if(cub->map.map_filled[mapY][mapX] != '0' && cub->map.map_filled[mapY][mapX] != 'O')
 				hit = 1;
         }
 
@@ -162,9 +162,9 @@ void ft_draw(t_game *cub)
         while (y < drawEnd) 
         {
             int texY = (((y * 256 - SCREEN_HEIGHT * 128 + lineHeight * 128) * TEXTURE_HEIGHT) / lineHeight) / 256;
-            if(cub->map->map_filled[mapY][mapX] == 'D')
+            if(cub->map.map_filled[mapY][mapX] == 'D')
                 color = cub->img.data_enemy + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if(cub->map->map_filled[mapY][mapX] == 'C')
+            else if(cub->map.map_filled[mapY][mapX] == 'C')
                 color = cub->img.data_door + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
             else if(side == 1 && rayDirY > 0)
                 color = cub->img.data_north + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
@@ -172,9 +172,9 @@ void ft_draw(t_game *cub)
                 color = cub->img.data_south + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
             else if (side == 0 && rayDirX > 0)
                 color = cub->img.data_west + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (cub->map->map_filled[mapY][mapX] == 'H')
+            else if (cub->map.map_filled[mapY][mapX] == 'H')
                 color = cub->img.data_hitler + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (side == 0 && rayDirX < 0 && cub->map->map_filled[mapY][mapX] == '1')
+            else if (side == 0 && rayDirX < 0 && cub->map.map_filled[mapY][mapX] == '1')
                 color = cub->img.data_east + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
             int color_int = *(unsigned int*)color;
             if (side == 1) color_int = (color_int >> 1) & 8355711; // Darken the color for y-side walls
@@ -189,47 +189,47 @@ void ft_draw(t_game *cub)
     ft_set_scope(cub);
     mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
 
-    int start_x = cub->player.posX - 12;
-    int start_y = cub->player.posY - 12;
-    int end_x = cub->player.posX + 12;
-    int end_y = cub->player.posY + 12;
+    int start_x = cub->player.posX - (MINIMAP_SIZE / 2);
+    int start_y = cub->player.posY - (MINIMAP_SIZE / 2);
+    int end_x = cub->player.posX + (MINIMAP_SIZE / 2);
+    int end_y = cub->player.posY + (MINIMAP_SIZE / 2);
     if (start_x < 0) 
     {
         start_x = 0;
-        end_x = 24;
+        end_x = MINIMAP_SIZE;
     }
     if (start_y < 0) 
     {
         start_y = 0;
-        end_y = 24;
+        end_y = MINIMAP_SIZE;
     }
-    if (end_x > 90) //41
+    if (end_x > cub->map.map_column + 1) //41
     {
-        end_x = 90; //41
-        start_x = 66; //17
+        end_x = cub->map.map_column + 1; //41
+        start_x = cub->map.map_column + 1 - MINIMAP_SIZE; //17
     }
-    if (end_y > 50) //46
+    if (end_y > cub->map.map_row + 1) //46
     {
-        end_y = 50; //46
-        start_y = 26; //22
+        end_y = cub->map.map_row + 1; //46
+        start_y = cub->map.map_row + 1 - MINIMAP_SIZE; //22
     }
     x = 0;
     y = 0;
     int original_start_x = start_x;
-    while(start_y < end_y)
+    while(cub->map.map_filled[start_y] && start_y < end_y)
     {
         start_x = original_start_x;
-        while(start_x < end_x)
+        while(cub->map.map_filled[start_y][start_x] && start_x < end_x)
         {
             if ((int)cub->player.posX == start_x && (int)cub->player.posY == start_y)
             {
                 mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
             }
-            else if(cub->map->map_filled[start_y][start_x] == '0' || cub->map->map_filled[start_y][start_x] == 'O')
+            else if(cub->map.map_filled[start_y][start_x] == '0' || cub->map.map_filled[start_y][start_x] == 'O')
             {
                 mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
             }
-            else if(cub->map->map_filled[start_y][start_x] != ' ')
+            else if(cub->map.map_filled[start_y][start_x] != ' ')
             {
                 mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
             }
@@ -241,7 +241,7 @@ void ft_draw(t_game *cub)
             start_x++;
         }
         start_y++;
-        start_x = cub->player.posX - 12;
+        start_x = cub->player.posX - (MINIMAP_SIZE / 2);
         x = 0;
         y++;
     }

@@ -23,9 +23,9 @@ void ft_print(t_game *cub)
 {
 	int i = 0;
 
-	while(cub->map->map_filled[i])
+	while(cub->map.map_filled[i])
 	{
-		ft_putstr_fd(cub->map->map_filled[i], 1);
+		ft_putstr_fd(cub->map.map_filled[i], 1);
 		ft_putchar_fd('\n', 1);
 		i++;
 	}
@@ -38,11 +38,9 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		ft_bzero(&cub, sizeof(t_game));
-		alloc_structs(&cub);
 		init_structs(&cub, argv);
 		check_map_walls(&cub);
 		check_map_content(&cub);
-		// ft_print(&cub);
 		ft_start_game(&cub);
 		ft_exit(&cub, NULL, EXIT_SUCCESS);
 	}

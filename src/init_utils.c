@@ -11,25 +11,34 @@ int	has_tab(char *line)
     return 1;
 }
 
-int is_map_line(t_game *cub, const char *line)
+int is_map_line(const char *line)
 {
-	(void)cub;
+	int i;
+
+	i = -1;
+	if (*line != '1' && *line != '0' && *line != 'N' &&
+        *line != 'S' && *line != 'W' && *line != 'E' &&
+        *line != ' ' && *line != 'D' && *line != 'C' && 
+		*line != 'O' && *line != 'H')
+        return (1);
+	line++;
     while (*(line) != '\0' && *(line + 1) != '\n')
 	{
-        if (*line != '1' && *line != '0' && *line != 'N' &&
-            *line != 'S' && *line != 'W' && *line != 'E' &&
-            *line != ' ' && *line != 'D' && *line != 'C' && *line != 'O' && *line != 'H')
-            return 1;
+		if (*line != '1' && *line != '0' && *line != 'N' &&
+			*line != 'S' && *line != 'W' && *line != 'E' &&
+			*line != ' ' && *line != 'D' && *line != 'C' && 
+			*line != 'O' && *line != 'H')
+            return (1);
         line++;
     }
-    return 0;
+    return (0);
 }
 
 void	join_fileinfo(t_game *cub, char *line)
 {
-	if (is_map_line(cub, line) == 0)
+	if (is_map_line(line) == 0)
     {
-		cub->map->mapline = ft_strjoin_free(cub->map->mapline, line);
+		cub->map.mapline = ft_strjoin_free(cub->map.mapline, line);
         cub->flag.mapline_flag = 1;
     }
 	else
@@ -39,9 +48,9 @@ void	join_fileinfo(t_game *cub, char *line)
 			free(line);
             ft_exit(cub, FILE, EXIT_FAILURE);
 		}
-		cub->map->line_cpy = ft_strjoin_free(cub->map->line_cpy, line);
+		cub->map.line_cpy = ft_strjoin_free(cub->map.line_cpy, line);
     }
-	if (!cub->map->line_cpy || !cub->map->mapline)
+	if (!cub->map.line_cpy || !cub->map.mapline)
     {
     	free(line);
 		ft_exit(cub, STRJOIN, EXIT_FAILURE);
@@ -50,25 +59,36 @@ void	join_fileinfo(t_game *cub, char *line)
 
 void	split_and_close(t_game *cub)
 {
-	cub->map->map_filled = ft_split(cub->map->mapline, '\n');
-	cub->map->map_info = ft_split(cub->map->line_cpy, '\n');
-    if (!cub->map->map_filled || !cub->map->map_info)
+	cub->map.map_filled = ft_split(cub->map.mapline, '\n');
+	cub->map.map_info = ft_split(cub->map.line_cpy, '\n');
+    if (!cub->map.map_filled || !cub->map.map_info)
 	{
         ft_exit(cub, SPLIT, EXIT_FAILURE);
 	}
-	close(cub->map->fd);
-	close(cub->map->fd);
+	close(cub->map.fd);
+	close(cub->map.fd);
 }
 
 void	check_map_size(t_game *cub)
 {
 	int	mapsize;
 	int	i;
+	int	i2;
 
 	i = -1;
+	i2 = -1;
 	mapsize = 0;
-	while (cub->map->map_filled[++i])
+	while (cub->map.map_filled[++i])
+	{
+		cub->map.map_row = i;
 		mapsize++;
+		while(cub->map.map_filled[i][++i2])
+		{
+			if (cub->map.map_column < i2)
+				cub->map.map_column = i2;
+		}
+		i2 = -1;
+	}
 	if (mapsize == 0)
 		ft_exit(cub, MAP, EXIT_FAILURE);
 }
@@ -79,7 +99,7 @@ int	read_loop(t_game *cub, int line_read)
 
 	while (1)
 	{
-		line = get_next_line(cub->map->fd);
+		line = get_next_line(cub->map.fd);
 		if (!line)
 			break ;
 		line_read++;
@@ -101,14 +121,14 @@ void	get_cubfile_info(t_game *cub)
 	int		line_read;
 	
 	line_read = 0;
-	cub->map->line_cpy = ft_strdup("");
-	cub->map->mapline = ft_strdup("");
-    if (!cub->map->line_cpy || !cub->map->mapline)
+	cub->map.line_cpy = ft_strdup("");
+	cub->map.mapline = ft_strdup("");
+    if (!cub->map.line_cpy || !cub->map.mapline)
 	{
         ft_exit(cub, MALLOC, EXIT_FAILURE);
 	}
-	cub->map->fd = open(cub->map->map_name, O_RDONLY);
-	if (cub->map->fd < 0)
+	cub->map.fd = open(cub->map.map_name, O_RDONLY);
+	if (cub->map.fd < 0)
 	 	ft_exit(cub, OPEN, EXIT_FAILURE);
 	line_read = read_loop(cub, line_read);
 	if (line_read == 0)
@@ -116,60 +136,160 @@ void	get_cubfile_info(t_game *cub)
 	split_and_close(cub);
 	check_map_size(cub);
 	// int i = -1;
-	// while(cub->map->map_filled[++i])
-		// printf("%s\n", cub->map->map_filled[i]);		//remove later
+	// while(cub->map.map_info[++i])
+	// 	printf("%s\n", cub->map.map_info[i]);		//remove later
 }
 
-void	alloc_new_node(t_game *cub, int istr, t_addidtion_map_info *begin)
+int		line_is_valid(t_game *cub, int i)
 {
-	t_addidtion_map_info *new_node;
+	int		i2;
+	char	**tmp;
 
-	if (cub->map->map_info[istr + 1])
-	{
-        new_node = (t_addidtion_map_info *)malloc(sizeof(t_addidtion_map_info));
-        if (!new_node)
-            ft_exit(cub, MALLOC, EXIT_FAILURE);
-        begin->next = new_node;
-		free(new_node);
-        begin = begin->next;
-    }
-	else
-        begin->next = NULL;
+	tmp = ft_split(cub->map.map_info[i], ' ');
+	i2 = -1;
+	while (tmp[++i2])
+		if (i2 > 1)
+			return (1);
+	i2 = -1;
+	while(tmp[++i2])
+        free(tmp[i2]);
+    free(tmp);
+	return (0);
 }
 
-void	fill_nodes(t_addidtion_map_info *begin, char **dir)
+void	get_int_value(t_game *cub, int i)
 {
-	begin->direction = dir[0];
-	if (!ft_strcmp(dir[0], "F") || !ft_strcmp(dir[0], "C"))
+	char	*tmp;
+
+	tmp = cub->map.map_info[i];
+	while (tmp[cub->tmp.i2] && tmp[cub->tmp.i2] == ' ')
+		cub->tmp.i2++;
+	cub->tmp.i2++;
+	while (tmp[cub->tmp.i2] && tmp[cub->tmp.i2] == ' ')
+		cub->tmp.i2++;
+	while (tmp[cub->tmp.i2])
 	{
-		begin->rgb_color = dir[1];
-		begin->texture_path = NULL;
-	}
-	else
-	{
-		begin->texture_path = dir[1];
-		begin->rgb_color = NULL;
+		if (tmp[cub->tmp.i2] >= '0' && tmp[cub->tmp.i2] <= '9')
+			cub->tmp.n = cub->tmp.n + tmp[cub->tmp.i2] - 48;
+		if (tmp[cub->tmp.i2 + 1] >= '0' && tmp[cub->tmp.i2 + 1] <= '9')
+			cub->tmp.n *= 10;
+		if (tmp[cub->tmp.i2 + 1] == ',')
+		{
+			if (!ft_strncmp(cub->map.map_info[i], "F ", 2))
+				cub->map.f_rgb[cub->tmp.i3] = cub->tmp.n;
+			else if (!ft_strncmp(cub->map.map_info[i], "C ", 2))
+				cub->map.c_rgb[cub->tmp.i3] = cub->tmp.n;
+			cub->tmp.i3++;
+			cub->tmp.n = 0;
+		}
+		cub->tmp.i2++;
 	}
 }
 
-void    fill_list(t_game *cub)
+int	rgb_color_is_valid(t_game *cub, int i)
 {
-	int						istr;
-	char					**dir;
-	t_addidtion_map_info	*begin;
+	int		i2;
+	int		colon;
+	char	*tmp;
 
-	istr = -1;
-	begin = cub->ad_map;
-    while (cub->map->map_info[++istr])
-    {
-		dir = ft_split(cub->map->map_info[istr], ' ');
-		if (!dir)
-			ft_exit(cub, SPLIT, EXIT_FAILURE);
-		if (!ft_strcmp(dir[0], "NO") || !ft_strcmp(dir[0], "SO")
-			|| !ft_strcmp(dir[0], "WE") || !ft_strcmp(dir[0], "EA")
-			|| !ft_strcmp(dir[0], "F") || !ft_strcmp(dir[0], "C"))
-			fill_nodes(begin, dir);
-		alloc_new_node(cub, istr, begin);
-		free_dir(dir);
+	i2 = 1;
+	colon = 0;
+	tmp = cub->map.map_info[i];
+	while(tmp[++i2])
+	{
+		if (!((tmp[i2] >= '0' && tmp[i2] <= '9')
+			|| tmp[i2] == ',' || tmp[i2] == ' '))
+			return (1);
+		if (tmp[i2] == ',')
+			colon++;
 	}
+	if (colon != 2)
+		return (1);
+	return (0);
+}
+
+int create_rgb(int r, int g, int b)
+{
+    return (r << 16) | (g << 8) | b;
+}
+
+
+void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
+{
+	if (!ft_strncmp(cub->map.map_info[i], "WE ", 3))
+	{
+		cub->map.west = cub->map.map_info[i];
+		ft_memmove(cub->map.west, tmp + 3, ft_strlen(tmp) - 2);
+	}
+	else if (!ft_strncmp(cub->map.map_info[i], "EA ", 3))
+	{
+		cub->map.east = cub->map.map_info[i];
+		ft_memmove(cub->map.east, tmp + 3, ft_strlen(tmp) - 2);
+	}
+	else if (!ft_strncmp(cub->map.map_info[i], "F ", 2)
+			|| !ft_strncmp(cub->map.map_info[i], "C ", 2))
+	{
+		if (rgb_color_is_valid(cub, i) == 1)
+			ft_exit(cub, TOKEN, EXIT_FAILURE);
+		cub->tmp.i2 = 0;
+		cub->tmp.i3 = 0;
+		cub->tmp.n = 0;
+		get_int_value(cub, i);
+	}
+}
+
+void	check_element_completness(t_game *cub)
+{
+	int	i;
+	int	completness_flag;
+
+	i = -1;
+	completness_flag = 0;
+	while (cub->map.map_info[++i])
+	{
+		if (!ft_strncmp(cub->map.map_info[i], "NO ", 3)
+				|| !ft_strncmp(cub->map.map_info[i], "SO ", 3)
+				|| !ft_strncmp(cub->map.map_info[i], "WE ", 3)
+				|| !ft_strncmp(cub->map.map_info[i], "EA ", 3)
+				|| !ft_strncmp(cub->map.map_info[i], "F ", 2)
+				|| !ft_strncmp(cub->map.map_info[i], "C ", 2))
+			completness_flag++;
+	}
+	if (completness_flag != 6)
+		ft_exit(cub, ELEMENT, EXIT_FAILURE);
+}
+
+void	get_rgb_color(t_game *cub)
+{
+	cub->map.f_color = create_rgb(cub->map.f_rgb[0],\
+cub->map.f_rgb[1], cub->map.f_rgb[2]);
+	cub->map.c_color = create_rgb(cub->map.c_rgb[0],\
+cub->map.c_rgb[1], cub->map.c_rgb[2]);
+}
+
+void	get_addition_mapinfo(t_game *cub)
+{
+	int 	i;
+	char	*tmp;
+
+	i = -1;
+	check_element_completness(cub);
+	while (cub->map.map_info[++i])
+	{
+		if (line_is_valid(cub, i) == 1)
+			ft_exit(cub, TOKEN, EXIT_FAILURE);
+		tmp = cub->map.map_info[i];
+		if (!ft_strncmp(cub->map.map_info[i], "NO ", 3))
+		{
+			cub->map.north = cub->map.map_info[i];
+			ft_memmove(cub->map.north, tmp + 3, ft_strlen(tmp) - 2);
+		}
+		else if (!ft_strncmp(cub->map.map_info[i], "SO ", 3))
+		{
+			cub->map.south = cub->map.map_info[i];
+			ft_memmove(cub->map.south, tmp + 3, ft_strlen(tmp) - 2);
+		}
+        get_addition_mapinfo_extended(cub, tmp, i);
+	}
+	get_rgb_color(cub);
 }

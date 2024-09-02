@@ -66,7 +66,7 @@ void move(t_game *cub, double dx, double dy)
             sideDistY += deltaDistY;
             mapY += stepY;
         }
-       if (cub->map->map_filled[mapY][mapX] != '0' && cub->map->map_filled[mapY][mapX] != 'O') {
+       if (cub->map.map_filled[mapY][mapX] != '0' && cub->map.map_filled[mapY][mapX] != 'O') {
             hit = 1;
         }
     }
@@ -99,14 +99,14 @@ int	ft_key_pressed(int keysym, t_game *cub)
     {
         int x = (int)(cub->player.posX + cub->player.dirX);
         int y = (int)(cub->player.posY + cub->player.dirY);
-        if(cub->map->map_filled[y][x] == 'C')
+        if(cub->map.map_filled[y][x] == 'C')
         {
-            cub->map->map_filled[y][x] = 'O';
+            cub->map.map_filled[y][x] = 'O';
             cub->flag.door_flag = 1;
         }
-        else if(cub->map->map_filled[y][x] == 'O')
+        else if(cub->map.map_filled[y][x] == 'O')
         {
-            cub->map->map_filled[y][x] = 'C';
+            cub->map.map_filled[y][x] = 'C';
             cub->flag.door_flag = 1;
         }
     }
@@ -116,13 +116,13 @@ int	ft_key_pressed(int keysym, t_game *cub)
         double c_x = cub->player.posX;
         double c_y = cub->player.posY;
         cub->flag.shoot_flag = 1;
-        while(cub->map->map_filled[(int)c_y][(int)(c_x)] == '0' || cub->map->map_filled[(int)c_y][(int)(c_x)] == 'O')
+        while(cub->map.map_filled[(int)c_y][(int)(c_x)] == '0' || cub->map.map_filled[(int)c_y][(int)(c_x)] == 'O')
         {
             c_x = c_x + cub->player.dirX;
             c_y = c_y + cub->player.dirY;
         }
-        if(cub->map->map_filled[(int)c_y][(int)(c_x)] == 'D')
-            cub->map->map_filled[(int)c_y][(int)(c_x)] = '0';
+        if(cub->map.map_filled[(int)c_y][(int)(c_x)] == 'D')
+            cub->map.map_filled[(int)c_y][(int)(c_x)] = '0';
     }
     else if(keysym ==XK_Escape)
 		ft_exit(cub, ESC, EXIT_SUCCESS);
@@ -167,14 +167,14 @@ int ft_mouse_click(int button, int x, int y, t_game *cub)
     {
         double c_x = cub->player.posX;
         double c_y = cub->player.posY;
-        while(cub->map->map_filled[(int)c_y][(int)(c_x)] == '0' || cub->map->map_filled[(int)c_y][(int)(c_x)] == 'O')
+        while(cub->map.map_filled[(int)c_y][(int)(c_x)] == '0' || cub->map.map_filled[(int)c_y][(int)(c_x)] == 'O')
         {
             c_x = c_x + cub->player.dirX;
             c_y = c_y + cub->player.dirY;
         }
-        if(cub->map->map_filled[(int)c_y][(int)(c_x)] == 'D')
+        if(cub->map.map_filled[(int)c_y][(int)(c_x)] == 'D')
         {
-            cub->map->map_filled[(int)c_y][(int)(c_x)] = '0';
+            cub->map.map_filled[(int)c_y][(int)(c_x)] = '0';
             ft_draw(cub);
         }
     }

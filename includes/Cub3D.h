@@ -17,7 +17,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>        // remove later
+# include <stdio.h>
 # include <mlx.h>
 # include <math.h>
 # include <X11/X.h>
@@ -38,7 +38,6 @@
 # define TEXTURE_HEIGHT 64
 # define MINI_TEX_WIDTH 10
 # define MINI_TEX_HEIGHT 10
-# define MINI_TEX_WIDTH 10
 # define SCOPE_HEIGHT 30
 # define SCOPE_WIDTH 30
 # define PISTOL_HEIGHT 90
@@ -72,24 +71,38 @@
 # define MLX_IMG		"Error: mlx_xpm_file_to_image() function failed!\n"
 # define MLX_DATA		"Error: mlx_get_data_addr() function failed!\n"
 # define MLX_NEW_IMG	"Error: mlx_new_image() function failed!\n"
+# define TOKEN          "Error: unrecognized token in cubfile!\n"
+# define ELEMENT        "Error: Map elements are not complete!\n"
+# define MAP_SIZE       "Error: lack of elements in Map!\n"
 
 //      INFORMATION
 # define ESC       "You pressed ESC. Game Over!\n" 
+# define X_CLOSE   "You clicked on the X. Game Over!\n"
 
-typedef enum e_sign
-{
-	FLOOR,
-    WALL_FLAG,
-	WALL_NORTH,
-	WALL_SOUTH,
-	WALL_EAST,
-	WALL_WEST,
-	DOOR,
-	ENEMY,
-	SPACE,
-	COLLISION,
-    PLAYER_FLAG
-} t_sign;
+//      Characters
+// WALL -> 1
+// FLOOR -> 0
+// OPEN_GATE -> O (O as a letter)
+// CLOSED_GATE -> C
+// PLAYER -> P
+// PLAYER_DIRECTION -> N, S, E, W
+// ENEMY -> D
+// PICTURE_ON_WALL -> H
+
+// typedef enum e_sign
+// {
+// 	FLOOR,
+//     WALL_FLAG,
+// 	WALL_NORTH,
+// 	WALL_SOUTH,
+// 	WALL_EAST,
+// 	WALL_WEST,
+// 	DOOR,
+// 	ENEMY,
+// 	SPACE,
+// 	COLLISION,
+//     PLAYER_FLAG
+// } t_sign;
 
 typedef struct  s_img
 {
@@ -127,27 +140,35 @@ typedef struct  s_img
     int  scope_line_length;
 }	            t_img;
 
-typedef struct	s_addidtion_map_info
-{
-	char						*direction;
-	char						*texture_path;
-	char						*rgb_color;
-	struct s_addidtion_map_info	*next;
-}				t_addidtion_map_info;
+// typedef struct	s_addidtion_map_info
+// {
+// 	char						*direction;
+// 	char						*texture_path;
+// 	char						*rgb_color;
+// 	struct s_addidtion_map_info	*next;
+// }				t_addidtion_map_info;
 
 typedef struct  s_map_data
 {
-    int     fd;
-    char    *line_cpy;
-    char    **map_filled;
-    char    *map_name;
-	char	*mapline;
-	char	**map_info;
-	int		line_begin_prev;
-	int		line_begin_cur;
-	int		line_end_prev;
-	int		map_row;
-	int		map_column;
+    int     				fd;
+    char    				*line_cpy;
+    char    				**map_filled;
+    char    				*map_name;
+	char					*mapline;
+	char					**map_info;
+	int						line_begin_prev;
+	int						line_begin_cur;
+	int						line_end_prev;
+	int						map_row;
+	int						map_column;
+	char					*north;
+	char					*east;
+	char					*south;
+	char					*west;
+	int						f_rgb[3];
+	int						c_rgb[3];
+    int                     f_color;
+    int                     c_color;
 }               t_map_data;
 
 typedef struct	s_player
@@ -171,15 +192,24 @@ typedef struct	s_flag
     int         shoot_flag;
 }				t_flag;
 
+typedef struct  s_tmp
+{
+    int         i2;
+    int         i3;
+    int         n;
+}               t_tmp;
+
 typedef struct  s_game
 {
     void        *mlx;
     void        *win;
     t_img					img;
-	t_addidtion_map_info	*ad_map;
-    t_map_data				*map;
+	// t_addidtion_map_info	*ad_map;
+    t_map_data				map;
 	t_player				player;
 	t_flag					flag;
+    t_tmp                   tmp;
+
 }	            t_game;
 
 //      INITS_ALLOCS
@@ -187,11 +217,12 @@ void	alloc_structs(t_game *cub);
 void	init_structs(t_game *cub, char *argv[]);
 
 //      INIT_UTILS
-int 	is_map_line(t_game *cub, const char *line);
+int 	is_map_line(const char *line);
 void	join_fileinfo(t_game *cub, char *line);
 void	split_and_close(t_game *cub);
 void	get_cubfile_info(t_game *cub);
-void	fill_list(t_game *cub);
+void	get_addition_mapinfo(t_game *cub);
+// void	fill_list(t_game *cub);
 
 //		PARSER
 void    check_map_walls(t_game *cub);
@@ -201,7 +232,6 @@ void    check_map_content(t_game *cub);
 
 //      FINISH
 void	ft_exit(t_game *cub, char *msg, int exit_status);
-void	free_dir(char **dir);
 void	ft_free_all(t_game *cub);
 
 //		SET_TEXTURE

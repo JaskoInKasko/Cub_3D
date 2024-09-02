@@ -39,16 +39,16 @@ int main()
 
 iterate through .cub file:
 // int i = -1;
-// while(cub->map->map_filled[++i])
-//  printf("%s\n", cub->map->map_filled[i]);
+// while(cub->map.map_filled[++i])
+//  printf("%s\n", cub->map.map_filled[i]);
 // int i = -1;
-// while(cub->map->map_info[++i])
-// printf("%s\n", cub->map->map_info[i]);
+// while(cub->map.map_info[++i])
+// printf("%s\n", cub->map.map_info[i]);
 
 
-// while (cub->map->map_info[str_arr][letter] && cub->map->map_info[str_arr][letter] != ' ')
+// while (cub->map.map_info[str_arr][letter] && cub->map.map_info[str_arr][letter] != ' ')
 // {
-// 	while (cub->map->map_info[str_arr][i] && cub->map->map_info[str_arr][i] != ' ')
+// 	while (cub->map.map_info[str_arr][i] && cub->map.map_info[str_arr][i] != ' ')
 // 		i++;
 // 	begin->direction = (char *)malloc(sizeof(char) * (i + 1));
 // 	if (!begin->direction)
