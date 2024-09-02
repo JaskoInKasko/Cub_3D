@@ -19,18 +19,6 @@ void ft_start_game(t_game *cub)
 	mlx_loop(cub->mlx);
 }
 
-void ft_print(t_game *cub)
-{
-	int i = 0;
-
-	while(cub->map.map_filled[i])
-	{
-		ft_putstr_fd(cub->map.map_filled[i], 1);
-		ft_putchar_fd('\n', 1);
-		i++;
-	}
-}
-
 int	main(int argc, char *argv[])
 {
 	t_game cub;

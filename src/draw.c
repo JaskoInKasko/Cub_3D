@@ -8,6 +8,43 @@ void my_mlx_pixel_put(t_game *cub, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
+void ft_set_pistol_shoot(t_game *cub)
+{
+    char *color;
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while(y < PISTOL_HEIGHT)
+	{
+		while(x < PISTOL_WIDTH)
+		{
+			color = cub->img.data_pistol_shoot + (y * cub->img.pistol_line_length + x * (cub->img.bits_per_pixel / 8));
+			unsigned int color_int = *(unsigned int*)color;
+			if(color_int != 0xFF000000) //0xFF000000 is the background color, we don't want to draw it, so we skip it
+				my_mlx_pixel_put(cub, x + (SCREEN_WIDTH - PISTOL_WIDTH) / 2, y + SCREEN_HEIGHT - PISTOL_HEIGHT, color_int);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
+void ft_set_text(t_game *cub)
+{
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 20 , 0x00FFFFFF, "Welcome to Cub3D!");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 60, 0x00FFFFFF, "Controls:");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 80, 0x00FFFFFF, "Move: W, A, S, D or Mouse");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 100, 0x00FFFFFF, "Rotate: Left Arrow, Right Arrow");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 120, 0x00FFFFFF, "Exit: ESC or X Button");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 140, 0x00FFFFFF, "Shoot: F or Right Click");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 160, 0x00FFFFFF, "Open Door: Space");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 180, 0x00FFFFFF, "Close Door: Space");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 200, 0x00FFFFFF, "Enjoy the game!");
+    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF, "@ Ismayil && Jasmin");
+}
+
 void ft_set_minimap_background(t_game *cub)
 {
 	int x;

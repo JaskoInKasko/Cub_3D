@@ -201,6 +201,48 @@ typedef struct  s_tmp
     int         n;
 }               t_tmp;
 
+typedef struct s_ray
+{
+    double      newX;
+    double      newY;
+    double      cameraX;
+    double      rayDirX;
+    double      rayDirY;
+    int         mapX;
+    int         mapY;
+    double      sideDistX;
+    double      sideDistY;
+    double      deltaDistX;
+    double      deltaDistY;
+    double      perpWallDist;
+    int         stepX;
+    int         stepY;
+    int         hit;
+    int         side;
+    int         lineHeight;
+    int         drawStart;
+    int         drawEnd;
+    int         texNum;
+    double      wallX;
+    int         texX;
+    int         texY;
+    double      step;
+    double      texPos;
+    char        *color;
+    int         color_int;
+}               t_ray;
+
+typedef struct  s_minimap
+{
+    int         x;
+    int         y;
+    int         start_x;
+    int         start_y;
+    int         end_x;
+    int         end_y;
+    int         original_start_x;
+}               t_minimap;
+
 typedef struct  s_game
 {
     void        *mlx;
@@ -210,6 +252,8 @@ typedef struct  s_game
     t_map_data				map;
 	t_player				player;
 	t_flag					flag;
+    t_ray                   ray;    
+    t_minimap               minimap;
     t_tmp                   tmp;
 
 }	            t_game;
@@ -251,7 +295,9 @@ void	my_mlx_pixel_put(t_game *cub, int x, int y, int color);
 void	ft_set_background(t_game *cub);
 void    ft_set_minimap_background(t_game *cub);
 void	ft_set_pistol(t_game *cub);
+void    ft_set_pistol_shoot(t_game *cub);
 void	ft_set_scope(t_game *cub);
+void    ft_set_text(t_game *cub);
 
 //		KEYS
 int	ft_x(t_game *cub);

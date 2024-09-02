@@ -1,19 +1,203 @@
 #include "../includes/Cub3D.h"
 
-void ft_set_text(t_game *cub)
+void ft_calculate_start_and_end_for_minimap_part2(t_game *cub)
 {
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 20 , 0x00FFFFFF, "Welcome to Cub3D!");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 60, 0x00FFFFFF, "Controls:");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 80, 0x00FFFFFF, "Move: W, A, S, D or Mouse");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 100, 0x00FFFFFF, "Rotate: Left Arrow, Right Arrow");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 120, 0x00FFFFFF, "Exit: ESC or X Button");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 140, 0x00FFFFFF, "Shoot: F or Right Click");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 160, 0x00FFFFFF, "Open Door: Space");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 180, 0x00FFFFFF, "Close Door: Space");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 200, 0x00FFFFFF, "Enjoy the game!");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF, "@ Ismayil && Jasmin");
+    if (cub->minimap.end_x > cub->map.map_column + 1)
+    {
+        cub->minimap.end_x = cub->map.map_column + 1;
+        if(cub->map.map_column + 1 < MINIMAP_SIZE)
+            cub->minimap.start_x = 0;
+        else
+            cub->minimap.start_x = cub->map.map_column + 1 - MINIMAP_SIZE;
+    }
+    if (cub->minimap.end_y > cub->map.map_row + 1)
+    {
+        cub->minimap.end_y = cub->map.map_row + 1;
+        if(cub->map.map_row + 1 < MINIMAP_SIZE)
+            cub->minimap.start_y = 0;
+        else
+            cub->minimap.start_y = cub->map.map_row + 1 - MINIMAP_SIZE;
+    }
 }
 
+void ft_calculate_start_and_end_for_minimap_part1(t_game *cub)
+{
+    cub->minimap.start_x = cub->player.posX - (MINIMAP_SIZE / 2);
+    cub->minimap.start_y = cub->player.posY - (MINIMAP_SIZE / 2);
+    cub->minimap.end_x = cub->player.posX + (MINIMAP_SIZE / 2);
+    cub->minimap.end_y = cub->player.posY + (MINIMAP_SIZE / 2);
+    if (cub->minimap.start_x < 0) 
+    {
+        cub->minimap.start_x = 0;
+        cub->minimap.end_x = MINIMAP_SIZE;
+        // cub->minimap.end_x = MINIMAP_SIZE < cub->map.map_column + 1 ? MINIMAP_SIZE : cub->map.map_column + 1;
+    }
+    if (cub->minimap.start_y < 0) 
+    {
+        cub->minimap.start_y = 0;
+        cub->minimap.end_y = MINIMAP_SIZE;
+        // cub->minimap.end_y = MINIMAP_SIZE < cub->map.map_row + 1 ? MINIMAP_SIZE : cub->map.map_row + 1;
+    }
+}
+
+void ft_put_image_to_window_for_minimap(t_game *cub)
+{
+    if ((int)cub->player.posX == cub->minimap.start_x && (int)cub->player.posY == cub->minimap.start_y)
+        mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, cub->minimap.x * MINI_TEX_WIDTH + SCREEN_WIDTH, cub->minimap.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+    else if(cub->map.map_filled[cub->minimap.start_y][cub->minimap.start_x] == '0' || cub->map.map_filled[cub->minimap.start_y][cub->minimap.start_x] == 'O')
+        mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, cub->minimap.x * MINI_TEX_WIDTH + SCREEN_WIDTH, cub->minimap.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+    else if(cub->map.map_filled[cub->minimap.start_y][cub->minimap.start_x] != ' ')
+        mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, cub->minimap.x * MINI_TEX_WIDTH + SCREEN_WIDTH, cub->minimap.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+    else
+        mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black, cub->minimap.x * MINI_TEX_WIDTH + SCREEN_WIDTH, cub->minimap.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+}
+
+void ft_draw_minimap(t_game *cub)
+{
+    ft_set_minimap_background(cub);
+    ft_calculate_start_and_end_for_minimap_part1(cub);
+    ft_calculate_start_and_end_for_minimap_part2(cub);
+    cub->minimap.x = 0;
+    cub->minimap.y = 0;
+    cub->minimap.original_start_x = cub->minimap.start_x;
+    while(cub->map.map_filled[cub->minimap.start_y] && cub->minimap.start_y < cub->minimap.end_y)
+    {
+        cub->minimap.start_x = cub->minimap.original_start_x;
+        while(cub->map.map_filled[cub->minimap.start_y][cub->minimap.start_x] && cub->minimap.start_x < cub->minimap.end_x)
+        {
+            ft_put_image_to_window_for_minimap(cub);
+            cub->minimap.x++;
+            cub->minimap.start_x++;
+        }
+        cub->minimap.start_y++;
+        // start_x = cub->player.posX - (MINIMAP_SIZE / 2);
+        cub->minimap.x = 0;
+        cub->minimap.y++;
+    }
+}
+
+
+void ft_calculate_vars_values_for_draw_part1(t_game *cub)
+{
+    cub->ray.rayDirX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
+    cub->ray.rayDirY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
+    cub->ray.mapX = (int)cub->player.posX;
+    cub->ray.mapY = (int)cub->player.posY;
+    cub->ray.deltaDistX = fabs(1.0 / cub->ray.rayDirX);
+    cub->ray.deltaDistY = fabs(1.0 / cub->ray.rayDirY);
+    cub->ray.stepX = 1;
+    cub->ray.stepY = 1;
+    cub->ray.sideDistX = (cub->ray.mapX + 1.0 - cub->player.posX) * cub->ray.deltaDistX;
+    cub->ray.sideDistY = (cub->ray.mapY + 1.0 - cub->player.posY) * cub->ray.deltaDistY;
+    if(cub->ray.rayDirX == 0)
+        cub->ray.deltaDistX = 1e30;
+    if(cub->ray.rayDirY == 0)
+        cub->ray.deltaDistY = 1e30;
+    if(cub->ray.rayDirX < 0)
+    {
+        cub->ray.stepX = -1;
+        cub->ray.sideDistX = (cub->player.posX - cub->ray.mapX) * cub->ray.deltaDistX;
+    }
+    if(cub->ray.rayDirY < 0)
+    {
+        cub->ray.stepY = -1;
+        cub->ray.sideDistY = (cub->player.posY - cub->ray.mapY) * cub->ray.deltaDistY;
+    }
+}
+
+void ft_find_hit_point(t_game *cub)
+{
+    cub->ray.hit = 0;
+    while(cub->ray.hit == 0)
+    {
+        if(cub->ray.sideDistX < cub->ray.sideDistY)
+        {
+            cub->ray.sideDistX += cub->ray.deltaDistX;
+            cub->ray.mapX += cub->ray.stepX;
+            cub->ray.side = 0;
+        }
+        else
+        {
+            cub->ray.sideDistY += cub->ray.deltaDistY;
+            cub->ray.mapY += cub->ray.stepY;
+            cub->ray.side = 1;
+        }
+        // if(!cub->map.map_filled[mapX][mapY])
+        // 	break;
+        if(cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] != '0' && cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] != 'O')
+            cub->ray.hit = 1;
+    }
+}
+
+void ft_calculate_vars_values_for_draw_part2(t_game *cub)
+{
+    if(cub->ray.side == 0) 
+        cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
+    else          
+        cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
+    cub->ray.lineHeight = (int)(SCREEN_HEIGHT / cub->ray.perpWallDist);
+    cub->ray.drawStart = -cub->ray.lineHeight / 2 + SCREEN_HEIGHT / 2;
+    if(cub->ray.drawStart < 0) 
+        cub->ray.drawStart = 0;
+    cub->ray.drawEnd = cub->ray.lineHeight / 2 + SCREEN_HEIGHT / 2;
+    if(cub->ray.drawEnd >= SCREEN_HEIGHT) 
+        cub->ray.drawEnd = SCREEN_HEIGHT - 1;
+    if (cub->ray.side == 0) 
+        cub->ray.wallX = cub->player.posY + cub->ray.perpWallDist * cub->ray.rayDirY;
+    else           
+        cub->ray.wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayDirX;
+    cub->ray.wallX -= floor(cub->ray.wallX);
+    cub->ray.texX = (int)(cub->ray.wallX * (double)TEXTURE_WIDTH);
+    if (cub->ray.side == 0 && cub->ray.rayDirX > 0) 
+        cub->ray.texX = TEXTURE_WIDTH - cub->ray.texX - 1; // Reverse texture, ters gorune biler bunsuz
+    if (cub->ray.side == 1 && cub->ray.rayDirY < 0) 
+        cub->ray.texX = TEXTURE_WIDTH - cub->ray.texX - 1; // Reverse texture
+}
+
+void ft_define_pixel_color_for_draw(t_game *cub, int y)
+{
+    cub->ray.texY = (((y * 256 - SCREEN_HEIGHT * 128 + cub->ray.lineHeight * 128) * TEXTURE_HEIGHT) / cub->ray.lineHeight) / 256;
+    if(cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == 'D')
+        cub->ray.color = cub->img.data_enemy + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if(cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == 'C')
+        cub->ray.color = cub->img.data_door + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if(cub->ray.side == 1 && cub->ray.rayDirY > 0)
+        cub->ray.color = cub->img.data_north + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if (cub->ray.side == 1 && cub->ray.rayDirY < 0)
+        cub->ray.color = cub->img.data_south + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if (cub->ray.side == 0 && cub->ray.rayDirX > 0)
+        cub->ray.color = cub->img.data_west + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if (cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == 'H')
+        cub->ray.color = cub->img.data_hitler + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if (cub->ray.side == 0 && cub->ray.rayDirX < 0 && cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == '1')
+        cub->ray.color = cub->img.data_east + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    cub->ray.color_int = *(unsigned int*)cub->ray.color;
+    if (cub->ray.side == 1) 
+        cub->ray.color_int = (cub->ray.color_int >> 1) & 8355711; // Darken the color for y-side walls
+}
+
+void ft_set_screen(t_game *cub)
+{
+    int x;
+    int y;
+
+    x = -1;
+    y = -1;
+    while(++x < SCREEN_WIDTH)
+    {
+        cub->ray.cameraX = 2 * x / (double)SCREEN_WIDTH - 1;
+        ft_calculate_vars_values_for_draw_part1(cub);
+        ft_find_hit_point(cub);
+        ft_calculate_vars_values_for_draw_part2(cub);
+        y = cub->ray.drawStart;
+        while (y < cub->ray.drawEnd) 
+        {
+            ft_define_pixel_color_for_draw(cub, y);
+            my_mlx_pixel_put(cub, x, y, cub->ray.color_int);
+            y++;
+        }
+    } 
+}
 void ft_draw(t_game *cub)
 {
     int x;
@@ -23,195 +207,13 @@ void ft_draw(t_game *cub)
     y = -1;
     ft_set_background(cub);
     ft_set_text(cub);
-    while(++x < SCREEN_WIDTH)
-    {
-        double cameraX = 2 * x / (double)SCREEN_WIDTH - 1;
-        double rayDirX = cub->player.dirX + cub->player.planeX * cameraX;
-        double rayDirY = cub->player.dirY + cub->player.planeY * cameraX;
-
-        int mapX = (int)cub->player.posX;
-        int mapY = (int)cub->player.posY;
-
-        double sideDistX;
-        double sideDistY;
-
-        double deltaDistX;
-        double deltaDistY;
-
-
-        if (rayDirX == 0) {
-            deltaDistX = 1e30; // Effectively infinity
-        } else {
-            deltaDistX = fabs(1.0 / rayDirX);
-        }
-
-        if (rayDirY == 0) {
-            deltaDistY = 1e30; // Effectively infinity
-        } else {
-            deltaDistY = fabs(1.0 / rayDirY);
-        }
-        double perpWallDist;
-
-        int stepX;
-        int stepY;
-
-        int hit = 0;
-        int side;
-
-        if(rayDirX < 0)
-        {
-            stepX = -1;
-            sideDistX = (cub->player.posX - mapX) * deltaDistX;
-        }
-        else
-        {
-            stepX = 1;
-            sideDistX = (mapX + 1.0 - cub->player.posX) * deltaDistX;
-        }
-        if(rayDirY < 0)
-        {
-            stepY = -1;
-            sideDistY = (cub->player.posY - mapY) * deltaDistY;
-        }
-        else
-        {
-            stepY = 1;
-            sideDistY = (mapY + 1.0 - cub->player.posY) * deltaDistY;
-        }
-
-        while(hit == 0)
-        {
-            if(sideDistX < sideDistY)
-            {
-                sideDistX += deltaDistX;
-                mapX += stepX;
-                side = 0;
-            }
-            else
-            {
-                sideDistY += deltaDistY;
-                mapY += stepY;
-                side = 1;
-            }
-			// if(!cub->map.map_filled[mapX][mapY])
-			// 	break;
-            if(cub->map.map_filled[mapY][mapX] != '0' && cub->map.map_filled[mapY][mapX] != 'O')
-				hit = 1;
-        }
-
-        if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-        else          perpWallDist = (sideDistY - deltaDistY);
-
-        int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
-        int drawStart = -lineHeight / 2 + SCREEN_HEIGHT / 2;
-        if(drawStart < 0) drawStart = 0;
-        int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
-        if(drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
-
-        double wallX;
-        if (side == 0) wallX = cub->player.posY + perpWallDist * rayDirY;
-        else           wallX = cub->player.posX + perpWallDist * rayDirX;
-        wallX -= floor(wallX);
-
-        int texX = (int)(wallX * (double)TEXTURE_WIDTH);
-        if (side == 0 && rayDirX > 0) texX = TEXTURE_WIDTH - texX - 1; // Reverse texture, ters gorune biler bunsuz
-        if (side == 1 && rayDirY < 0) texX = TEXTURE_WIDTH - texX - 1; // Reverse texture
-        char *color;
-        y = drawStart;
-        while (y < drawEnd) 
-        {
-            int texY = (((y * 256 - SCREEN_HEIGHT * 128 + lineHeight * 128) * TEXTURE_HEIGHT) / lineHeight) / 256;
-            if(cub->map.map_filled[mapY][mapX] == 'D')
-                color = cub->img.data_enemy + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if(cub->map.map_filled[mapY][mapX] == 'C')
-                color = cub->img.data_door + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if(side == 1 && rayDirY > 0)
-                color = cub->img.data_north + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (side == 1 && rayDirY < 0)
-                color = cub->img.data_south + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (side == 0 && rayDirX > 0)
-                color = cub->img.data_west + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (cub->map.map_filled[mapY][mapX] == 'H')
-                color = cub->img.data_hitler + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            else if (side == 0 && rayDirX < 0 && cub->map.map_filled[mapY][mapX] == '1')
-                color = cub->img.data_east + (texY * cub->img.tex_line_length + texX * (cub->img.bits_per_pixel / 8));
-            int color_int = *(unsigned int*)color;
-            if (side == 1) color_int = (color_int >> 1) & 8355711; // Darken the color for y-side walls
-            my_mlx_pixel_put(cub, x, y, color_int);
-            y++;
-        }
-    }
+    ft_set_screen(cub);
     if(!cub->flag.shoot_flag)
         ft_set_pistol(cub);
     else
         ft_set_pistol_shoot(cub);
     ft_set_scope(cub);
     mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
-
-    int start_x = cub->player.posX - (MINIMAP_SIZE / 2);
-    int start_y = cub->player.posY - (MINIMAP_SIZE / 2);
-    int end_x = cub->player.posX + (MINIMAP_SIZE / 2);
-    int end_y = cub->player.posY + (MINIMAP_SIZE / 2);
-    if (start_x < 0) 
-    {
-        start_x = 0;
-        end_x = MINIMAP_SIZE;
-        // end_x = MINIMAP_SIZE < cub->map.map_column + 1 ? MINIMAP_SIZE : cub->map.map_column + 1;
-    }
-    if (start_y < 0) 
-    {
-        start_y = 0;
-        end_y = MINIMAP_SIZE;
-        // end_y = MINIMAP_SIZE < cub->map.map_row + 1 ? MINIMAP_SIZE : cub->map.map_row + 1;
-    }
-    if (end_x > cub->map.map_column + 1)
-    {
-        end_x = cub->map.map_column + 1;
-        if(cub->map.map_column + 1 < MINIMAP_SIZE)
-            start_x = 0;
-        else
-            start_x = cub->map.map_column + 1 - MINIMAP_SIZE;
-    }
-    if (end_y > cub->map.map_row + 1)
-    {
-        end_y = cub->map.map_row + 1;
-        if(cub->map.map_row + 1 < MINIMAP_SIZE)
-            start_y = 0;
-        else
-            start_y = cub->map.map_row + 1 - MINIMAP_SIZE;
-    }
-    x = 0;
-    y = 0;
-    int original_start_x = start_x;
-    ft_set_minimap_background(cub);
-    while(cub->map.map_filled[start_y] && start_y < end_y)
-    {
-        start_x = original_start_x;
-        while(cub->map.map_filled[start_y][start_x] && start_x < end_x)
-        {
-            if ((int)cub->player.posX == start_x && (int)cub->player.posY == start_y)
-            {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-            }
-            else if(cub->map.map_filled[start_y][start_x] == '0' || cub->map.map_filled[start_y][start_x] == 'O')
-            {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-            }
-            else if(cub->map.map_filled[start_y][start_x] != ' ')
-            {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-            }
-            else
-            {
-                mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-            }
-            x++;
-            start_x++;
-        }
-        start_y++;
-        // start_x = cub->player.posX - (MINIMAP_SIZE / 2);
-        x = 0;
-        y++;
-    }
+    ft_draw_minimap(cub);
 }
 
