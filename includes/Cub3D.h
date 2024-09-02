@@ -249,6 +249,7 @@ void	ft_draw(t_game *cub);
 //		DRAW_UTILS
 void	my_mlx_pixel_put(t_game *cub, int x, int y, int color);
 void	ft_set_background(t_game *cub);
+void    ft_set_minimap_background(t_game *cub);
 void	ft_set_pistol(t_game *cub);
 void	ft_set_scope(t_game *cub);
 

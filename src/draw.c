@@ -8,6 +8,25 @@ void my_mlx_pixel_put(t_game *cub, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
+void ft_set_minimap_background(t_game *cub)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while(y < MINIMAP_SIZE)
+	{
+		while(x < MINIMAP_SIZE)
+		{
+			mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
 void ft_set_background(t_game *cub)
 {
     int x;

@@ -14,47 +14,6 @@ void ft_set_text(t_game *cub)
     mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF, "@ Ismayil && Jasmin");
 }
 
-// void draw_sprite(t_game *cub, int x, int y) {
-//     // Calculate sprite position relative to the player
-//     double sprite_x = sprite->x - cub->player.posX;
-//     double sprite_y = sprite->y - cub->player.posY;
-
-//     // Transform sprite position to camera space
-//     double inv_det = 1.0 / (cub->player.plane_x * cub->player.dir_y - cub->player.dir_x * cub->player.plane_y);
-//     double transform_x = inv_det * (cub->player.dir_y * sprite_x - cub->player.dir_x * sprite_y);
-//     double transform_y = inv_det * (-cub->player.plane_y * sprite_x + cub->player.plane_x * sprite_y);
-
-//     // Calculate screen position
-//     int sprite_screen_x = (int)((SCREEN_WIDTH / 2) * (1 + transform_x / transform_y));
-
-//     // Calculate sprite size
-//     int sprite_height = abs((int)(SCREEN_HEIGHT / transform_y));
-//     int draw_start_y = -sprite_height / 2 + SCREEN_HEIGHT / 2;
-//     if (draw_start_y < 0) draw_start_y = 0;
-//     int draw_end_y = sprite_height / 2 + SCREEN_HEIGHT / 2;
-//     if (draw_end_y >= SCREEN_HEIGHT) draw_end_y = SCREEN_HEIGHT - 1;
-
-//     int sprite_width = abs((int)(SCREEN_HEIGHT / transform_y));
-//     int draw_start_x = -sprite_width / 2 + sprite_screen_x;
-//     if (draw_start_x < 0) draw_start_x = 0;
-//     int draw_end_x = sprite_width / 2 + sprite_screen_x;
-//     if (draw_end_x >= SCREEN_WIDTH) draw_end_x = SCREEN_WIDTH - 1;
-
-//     // Draw sprite
-//     for (int stripe = draw_start_x; stripe < draw_end_x; stripe++) {
-//         int tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * sprite->texture_width / sprite_width) / 256;
-//         if (transform_y > 0 && stripe > 0 && stripe < SCREEN_WIDTH && transform_y < cub->z_buffer[stripe]) {
-//             for (int y = draw_start_y; y < draw_end_y; y++) {
-//                 int d = (y) * 256 - SCREEN_HEIGHT * 128 + sprite_height * 128;
-//                 int tex_y = ((d * sprite->texture_height) / sprite_height) / 256;
-//                 int color = sprite->texture[tex_x + tex_y * sprite->texture_width];
-//                 if (color != 0x000000) // Check for transparency
-//                     my_mlx_pixel_put(cub, stripe, y, color);
-//             }
-//         }
-//     }
-// }
-
 void ft_draw(t_game *cub)
 {
     int x;
@@ -197,25 +156,34 @@ void ft_draw(t_game *cub)
     {
         start_x = 0;
         end_x = MINIMAP_SIZE;
+        // end_x = MINIMAP_SIZE < cub->map.map_column + 1 ? MINIMAP_SIZE : cub->map.map_column + 1;
     }
     if (start_y < 0) 
     {
         start_y = 0;
         end_y = MINIMAP_SIZE;
+        // end_y = MINIMAP_SIZE < cub->map.map_row + 1 ? MINIMAP_SIZE : cub->map.map_row + 1;
     }
-    if (end_x > cub->map.map_column + 1) //41
+    if (end_x > cub->map.map_column + 1)
     {
-        end_x = cub->map.map_column + 1; //41
-        start_x = cub->map.map_column + 1 - MINIMAP_SIZE; //17
+        end_x = cub->map.map_column + 1;
+        if(cub->map.map_column + 1 < MINIMAP_SIZE)
+            start_x = 0;
+        else
+            start_x = cub->map.map_column + 1 - MINIMAP_SIZE;
     }
-    if (end_y > cub->map.map_row + 1) //46
+    if (end_y > cub->map.map_row + 1)
     {
-        end_y = cub->map.map_row + 1; //46
-        start_y = cub->map.map_row + 1 - MINIMAP_SIZE; //22
+        end_y = cub->map.map_row + 1;
+        if(cub->map.map_row + 1 < MINIMAP_SIZE)
+            start_y = 0;
+        else
+            start_y = cub->map.map_row + 1 - MINIMAP_SIZE;
     }
     x = 0;
     y = 0;
     int original_start_x = start_x;
+    ft_set_minimap_background(cub);
     while(cub->map.map_filled[start_y] && start_y < end_y)
     {
         start_x = original_start_x;
@@ -241,7 +209,7 @@ void ft_draw(t_game *cub)
             start_x++;
         }
         start_y++;
-        start_x = cub->player.posX - (MINIMAP_SIZE / 2);
+        // start_x = cub->player.posX - (MINIMAP_SIZE / 2);
         x = 0;
         y++;
     }

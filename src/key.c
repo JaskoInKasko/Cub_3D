@@ -2,7 +2,7 @@
 
 int	ft_x(t_game *cub)
 {
-    ft_exit(cub, ESC, EXIT_SUCCESS);
+    ft_exit(cub, X_CLOSE, EXIT_SUCCESS);
     return 0;
 }
 
