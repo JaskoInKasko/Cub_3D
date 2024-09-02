@@ -6,7 +6,7 @@
 /*   By: jsakanov <jsakanov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/08/26 21:15:30 by jsakanov         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:57:55 by jsakanov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@
 # define TOKEN          "Error: unrecognized token in cubfile!\n"
 # define ELEMENT        "Error: Map elements are not complete!\n"
 # define MAP_SIZE       "Error: lack of elements in Map!\n"
+# define DOOR           "Error: Door has no connecting point between 2 walls!\n"
+# define EXTENTION      "Error: Mapfile has wrong extention!\n"
 
 //      INFORMATION
 # define ESC       "You pressed ESC. Game Over!\n" 

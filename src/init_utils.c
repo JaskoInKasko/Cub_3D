@@ -116,6 +116,19 @@ int	read_loop(t_game *cub, int line_read)
 	return (line_read);
 }
 
+void	ft_map_extension(t_game *cub)
+{
+	char	*file_extension;
+	char	*extension;
+
+	extension = ".cub";
+	file_extension = ft_strrchr(cub->map.map_name, '.');
+	if (!file_extension)
+		ft_exit(cub, EXTENTION, EXIT_FAILURE);
+	if ((ft_strcmp(file_extension, extension)) != 0)
+		ft_exit(cub, EXTENTION, EXIT_FAILURE);
+}
+
 void	get_cubfile_info(t_game *cub)
 {
 	int		line_read;
@@ -127,6 +140,7 @@ void	get_cubfile_info(t_game *cub)
 	{
         ft_exit(cub, MALLOC, EXIT_FAILURE);
 	}
+	ft_map_extension(cub);
 	cub->map.fd = open(cub->map.map_name, O_RDONLY);
 	if (cub->map.fd < 0)
 	 	ft_exit(cub, OPEN, EXIT_FAILURE);
