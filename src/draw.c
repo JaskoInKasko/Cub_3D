@@ -77,7 +77,7 @@ void ft_set_background(t_game *cub)
         {
             while(x < SCREEN_WIDTH)
             {
-                my_mlx_pixel_put(cub, x, y, SKY_BLUE);
+                my_mlx_pixel_put(cub, x, y, cub->map.c_color);
                 x++;
             }
         }
@@ -85,7 +85,7 @@ void ft_set_background(t_game *cub)
         {
             while(x < SCREEN_WIDTH)
             {
-                my_mlx_pixel_put(cub, x, y, FLOOR_COLOR);
+                my_mlx_pixel_put(cub, x, y, cub->map.f_color);
                 x++;
             }
         }

@@ -22,10 +22,10 @@ void ft_load_texture(t_game *cub)
 	cub->img.img = mlx_new_image(cub->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (cub->img.img == NULL)
 		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
-	ft_img_check(cub, "./textures/blue.xpm", &cub->img.north);
-	ft_img_check(cub, "./textures/brick.xpm", &cub->img.south);
-	ft_img_check(cub, "./textures/grey.xpm", &cub->img.east);
-	ft_img_check(cub, "./textures/wood.xpm", &cub->img.west);
+	ft_img_check(cub, cub->map.north, &cub->img.north);
+	ft_img_check(cub, cub->map.south, &cub->img.south);
+	ft_img_check(cub, cub->map.east, &cub->img.east);
+	ft_img_check(cub, cub->map.west, &cub->img.west);
 	ft_img_check(cub, "./textures/hitler.xpm", &cub->img.hitler);
 	ft_img_check(cub, "./textures/door.xpm", &cub->img.door);
 	ft_img_check(cub, "./textures/pistol.xpm", &cub->img.pistol);

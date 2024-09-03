@@ -54,7 +54,8 @@ void ft_put_image_to_window_for_minimap(t_game *cub)
 
 void ft_draw_minimap(t_game *cub)
 {
-    ft_set_minimap_background(cub);
+    if(!cub->flag.shoot_flag)
+        ft_set_minimap_background(cub);
     ft_calculate_start_and_end_for_minimap_part1(cub);
     ft_calculate_start_and_end_for_minimap_part2(cub);
     cub->minimap.x = 0;
@@ -70,7 +71,6 @@ void ft_draw_minimap(t_game *cub)
             cub->minimap.start_x++;
         }
         cub->minimap.start_y++;
-        // start_x = cub->player.posX - (MINIMAP_SIZE / 2);
         cub->minimap.x = 0;
         cub->minimap.y++;
     }
@@ -162,15 +162,15 @@ void ft_define_pixel_color_for_draw(t_game *cub, int y)
     else if(cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == 'C')
         cub->ray.color = cub->img.data_door + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
     else if(cub->ray.side == 1 && cub->ray.rayDirY > 0)
-        cub->ray.color = cub->img.data_north + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
-    else if (cub->ray.side == 1 && cub->ray.rayDirY < 0)
         cub->ray.color = cub->img.data_south + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+    else if (cub->ray.side == 1 && cub->ray.rayDirY < 0)
+        cub->ray.color = cub->img.data_north + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
     else if (cub->ray.side == 0 && cub->ray.rayDirX > 0)
-        cub->ray.color = cub->img.data_west + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+        cub->ray.color = cub->img.data_east + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
     else if (cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == 'H')
         cub->ray.color = cub->img.data_hitler + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
     else if (cub->ray.side == 0 && cub->ray.rayDirX < 0 && cub->map.map_filled[cub->ray.mapY][cub->ray.mapX] == '1')
-        cub->ray.color = cub->img.data_east + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
+        cub->ray.color = cub->img.data_west + (cub->ray.texY * cub->img.tex_line_length + cub->ray.texX * (cub->img.bits_per_pixel / 8));
     cub->ray.color_int = *(unsigned int*)cub->ray.color;
     if (cub->ray.side == 1) 
         cub->ray.color_int = (cub->ray.color_int >> 1) & 8355711; // Darken the color for y-side walls

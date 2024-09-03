@@ -1,5 +1,37 @@
 #include "../includes/Cub3D.h"
 
+void ft_define_direction(t_game *cub, char c)
+{
+	if(c == 'N')
+	{
+		cub->player.dirX = 0;
+		cub->player.dirY = -1;
+		cub->player.planeX = -1;
+		cub->player.planeY = 0;
+	}
+	else if(c == 'S')
+	{
+		cub->player.dirX = 0;
+		cub->player.dirY = 1;
+		cub->player.planeX = 1;
+		cub->player.planeY = 0;
+	}
+	else if(c == 'W')
+	{
+		cub->player.dirX = -1;
+		cub->player.dirY = 0;
+		cub->player.planeX = 0;
+		cub->player.planeY = 1;
+	}
+	else if(c == 'E')
+	{
+		cub->player.dirX = 1;
+		cub->player.dirY = 0;
+		cub->player.planeX = 0;
+		cub->player.planeY = 1;
+	}
+}
+
 int		map_content_loop(t_game *cub, int i, int i2, int full_content)
 {
 	while (cub->map.map_filled[++i])
@@ -15,8 +47,9 @@ int		map_content_loop(t_game *cub, int i, int i2, int full_content)
 					full_content = 2;
 				if (cub->player.posX != 0 || cub->player.posY != 0)
 					ft_exit(cub, PLAYER, EXIT_FAILURE);
-				cub->player.posX = i2 + 0.011;
-				cub->player.posY = i + 0.011;
+				ft_define_direction(cub, cub->map.map_filled[i][i2]);
+				cub->player.posX = i2 + 0.51;
+				cub->player.posY = i + 0.51;
 				cub->map.map_filled[i][i2] = '0';
 			}
 		}

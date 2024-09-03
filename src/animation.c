@@ -6,7 +6,6 @@ int	ft_animation(t_game *cub)
 
     if(cub->flag.shoot_flag == 1)
     {
-        ft_set_pistol_shoot(cub);
         ft_draw(cub);
         while(1)
         {
