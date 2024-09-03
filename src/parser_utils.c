@@ -2,34 +2,34 @@
 
 void ft_define_direction(t_game *cub, char c)
 {
-	if(c == 'N')
-	{
-		cub->player.dirX = 0;
-		cub->player.dirY = -1;
-		cub->player.planeX = -1;
-		cub->player.planeY = 0;
-	}
-	else if(c == 'S')
-	{
-		cub->player.dirX = 0;
-		cub->player.dirY = 1;
-		cub->player.planeX = 1;
-		cub->player.planeY = 0;
-	}
-	else if(c == 'W')
-	{
-		cub->player.dirX = -1;
-		cub->player.dirY = 0;
-		cub->player.planeX = 0;
-		cub->player.planeY = 1;
-	}
-	else if(c == 'E')
-	{
-		cub->player.dirX = 1;
-		cub->player.dirY = 0;
-		cub->player.planeX = 0;
-		cub->player.planeY = 1;
-	}
+    if (c == 'N')
+    {
+        cub->player.dirX = 0;
+        cub->player.dirY = -1;
+        cub->player.planeX = 0.66;
+        cub->player.planeY = 0;
+    }
+    else if (c == 'S')
+    {
+        cub->player.dirX = 0;
+        cub->player.dirY = 1;
+        cub->player.planeX = -0.66;
+        cub->player.planeY = 0;
+    }
+    else if (c == 'W')
+    {
+        cub->player.dirX = -1;
+        cub->player.dirY = 0;
+        cub->player.planeX = 0;
+        cub->player.planeY = -0.66;
+    }
+    else if (c == 'E')
+    {
+        cub->player.dirX = 1;
+        cub->player.dirY = 0;
+        cub->player.planeX = 0;
+        cub->player.planeY = 0.66;
+    }
 }
 
 int		map_content_loop(t_game *cub, int i, int i2, int full_content)

@@ -132,9 +132,11 @@ void ft_find_hit_point(t_game *cub)
 void ft_calculate_vars_values_for_draw_part2(t_game *cub)
 {
     if(cub->ray.side == 0) 
-        cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
+        // cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
+        cub->ray.perpWallDist = (cub->ray.mapX - cub->player.posX + (1 - cub->ray.stepX) / 2) / cub->ray.rayDirX;
     else          
-        cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
+        // cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
+        cub->ray.perpWallDist = (cub->ray.mapY - cub->player.posY + (1 - cub->ray.stepY) / 2) / cub->ray.rayDirY;
     cub->ray.lineHeight = (int)(SCREEN_HEIGHT / cub->ray.perpWallDist);
     cub->ray.drawStart = -cub->ray.lineHeight / 2 + SCREEN_HEIGHT / 2;
     if(cub->ray.drawStart < 0) 
@@ -174,6 +176,8 @@ void ft_define_pixel_color_for_draw(t_game *cub, int y)
     cub->ray.color_int = *(unsigned int*)cub->ray.color;
     if (cub->ray.side == 1) 
         cub->ray.color_int = (cub->ray.color_int >> 1) & 8355711; // Darken the color for y-side walls
+    // Give x and y sides different brightness
+    // if (side == 1) { color = color / 2; }
 }
 
 void ft_set_screen(t_game *cub)

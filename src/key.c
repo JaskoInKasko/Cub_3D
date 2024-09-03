@@ -129,9 +129,9 @@ int	ft_key_pressed(int keysym, t_game *cub)
     else if (keysym == XK_d)
         move(cub, cub->player.planeX, cub->player.planeY);
     else if(keysym == XK_Left)
-        rotate(cub, ANGLE);
-    else if(keysym == XK_Right)
         rotate(cub, -ANGLE);
+    else if(keysym == XK_Right)
+        rotate(cub, ANGLE);
     else if(keysym == XK_space)
         ft_space_pressed(cub);
     else if(keysym == XK_f)
@@ -155,7 +155,7 @@ int ft_mouse_move(int x, int y, t_game *cub)
     dx = (double)(x - last_x) / 1000;
     if (dx != 0)
     {
-        rotate(cub, -dx);
+        rotate(cub, dx);
         ft_draw(cub);
     }
     if (x != center_x)
