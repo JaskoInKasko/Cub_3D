@@ -1,141 +1,125 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/03 20:53:13 by iguliyev          #+#    #+#             */
+/*   Updated: 2024/09/03 22:22:04 by iguliyev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/Cub3D.h"
 
-void my_mlx_pixel_put(t_game *cub, int x, int y, int color)
+static void	ft_draw_part1_continuous(t_game *cub)
 {
-    char    *dst;
-
-    dst = cub->img.addr + (y * cub->img.line_length + x * (cub->img.bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
-}
-
-void ft_set_pistol_shoot(t_game *cub)
-{
-    char *color;
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while(y < PISTOL_HEIGHT)
+	if (cub->ray.ray_dir_x == 0)
+		cub->ray.delta_dist_x = 1e30;
+	if (cub->ray.ray_dir_y == 0)
+		cub->ray.delta_dist_y = 1e30;
+	if (cub->ray.ray_dir_x < 0)
 	{
-		while(x < PISTOL_WIDTH)
-		{
-			color = cub->img.data_pistol_shoot + (y * cub->img.pistol_line_length + x * (cub->img.bits_per_pixel / 8));
-			unsigned int color_int = *(unsigned int*)color;
-			if(color_int != 0xFF000000) //0xFF000000 is the background color, we don't want to draw it, so we skip it
-				my_mlx_pixel_put(cub, x + (SCREEN_WIDTH - PISTOL_WIDTH) / 2, y + SCREEN_HEIGHT - PISTOL_HEIGHT, color_int);
-			x++;
-		}
-		x = 0;
-		y++;
+		cub->ray.step_x = -1;
+		cub->ray.side_dist_x = (cub->player.pos_x - cub->ray.map_x)
+			* cub->ray.delta_dist_x;
+	}
+	if (cub->ray.ray_dir_y < 0)
+	{
+		cub->ray.step_y = -1;
+		cub->ray.side_dist_y = (cub->player.pos_y - cub->ray.map_y)
+			* cub->ray.delta_dist_y;
 	}
 }
 
-void ft_set_text(t_game *cub)
+void	ft_calculate_vars_values_for_draw_part1(t_game *cub)
 {
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 20 , 0x00FFFFFF, "Welcome to Cub3D!");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 60, 0x00FFFFFF, "Controls:");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 80, 0x00FFFFFF, "Move: W, A, S, D or Mouse");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 100, 0x00FFFFFF, "Rotate: Left Arrow, Right Arrow");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 120, 0x00FFFFFF, "Exit: ESC or X Button");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 140, 0x00FFFFFF, "Shoot: F or Right Click");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 160, 0x00FFFFFF, "Open Door: Space");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 180, 0x00FFFFFF, "Close Door: Space");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, 200, 0x00FFFFFF, "Enjoy the game!");
-    mlx_string_put(cub->mlx, cub->win, SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF, "@ Ismayil && Jasmin");
+	cub->ray.ray_dir_x = cub->player.dir_x
+		+ cub->player.plane_x * cub->ray.camera_x;
+	cub->ray.ray_dir_y = cub->player.dir_y
+		+ cub->player.plane_y * cub->ray.camera_x;
+	cub->ray.map_x = (int)cub->player.pos_x;
+	cub->ray.map_y = (int)cub->player.pos_y;
+	cub->ray.delta_dist_x = fabs(1.0 / cub->ray.ray_dir_x);
+	cub->ray.delta_dist_y = fabs(1.0 / cub->ray.ray_dir_y);
+	cub->ray.step_x = 1;
+	cub->ray.step_y = 1;
+	cub->ray.side_dist_x = (cub->ray.map_x + 1.0 - cub->player.pos_x)
+		* cub->ray.delta_dist_x;
+	cub->ray.side_dist_y = (cub->ray.map_y + 1.0 - cub->player.pos_y)
+		* cub->ray.delta_dist_y;
+	ft_draw_part1_continuous(cub);
 }
 
-void ft_set_minimap_background(t_game *cub)
+void	ft_find_hit_point(t_game *cub)
 {
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while(y < MINIMAP_SIZE)
+	cub->ray.hit = 0;
+	while (cub->map.map_filled[cub->ray.map_y][cub->ray.map_x]
+			&& cub->ray.hit == 0)
 	{
-		while(x < MINIMAP_SIZE)
+		if (cub->ray.side_dist_x < cub->ray.side_dist_y)
 		{
-			mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black, x * MINI_TEX_WIDTH + SCREEN_WIDTH, y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
-			x++;
+			cub->ray.side_dist_x += cub->ray.delta_dist_x;
+			cub->ray.map_x += cub->ray.step_x;
+			cub->ray.side = 0;
 		}
-		x = 0;
-		y++;
+		else
+		{
+			cub->ray.side_dist_y += cub->ray.delta_dist_y;
+			cub->ray.map_y += cub->ray.step_y;
+			cub->ray.side = 1;
+		}
+		if (cub->map.map_filled[cub->ray.map_y][cub->ray.map_x] != '0'
+				&& cub->map.map_filled[cub->ray.map_y][cub->ray.map_x] != 'O')
+			cub->ray.hit = 1;
 	}
 }
 
-void ft_set_background(t_game *cub)
+// Reverse texture, ters gorune biler bunsuz, son iki if conditions
+void	ft_calculate_vars_values_for_draw_part2(t_game *cub)
 {
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    while(y < SCREEN_HEIGHT)
-    {
-        if(y < SCREEN_HEIGHT / 2)
-        {
-            while(x < SCREEN_WIDTH)
-            {
-                my_mlx_pixel_put(cub, x, y, cub->map.c_color);
-                x++;
-            }
-        }
-        else
-        {
-            while(x < SCREEN_WIDTH)
-            {
-                my_mlx_pixel_put(cub, x, y, cub->map.f_color);
-                x++;
-            }
-        }
-        x = 0;
-        y++;
-    }
+	if (cub->ray.side == 0)
+		cub->ray.perp_wall_dist = (cub->ray.map_x - cub->player.pos_x
+				+ (1 - cub->ray.step_x) / 2) / cub->ray.ray_dir_x;
+	else
+		cub->ray.perp_wall_dist = (cub->ray.map_y - cub->player.pos_y
+				+ (1 - cub->ray.step_y) / 2) / cub->ray.ray_dir_y;
+	cub->ray.line_height = (int)(SCREEN_HEIGHT / cub->ray.perp_wall_dist);
+	cub->ray.draw_start = -cub->ray.line_height / 2 + SCREEN_HEIGHT / 2;
+	if (cub->ray.draw_start < 0)
+		cub->ray.draw_start = 0;
+	cub->ray.draw_end = cub->ray.line_height / 2 + SCREEN_HEIGHT / 2;
+	if (cub->ray.draw_end >= SCREEN_HEIGHT)
+		cub->ray.draw_end = SCREEN_HEIGHT - 1;
+	if (cub->ray.side == 0)
+		cub->ray.wall_x = cub->player.pos_y
+			+ cub->ray.perp_wall_dist * cub->ray.ray_dir_y;
+	else
+		cub->ray.wall_x = cub->player.pos_x
+			+ cub->ray.perp_wall_dist * cub->ray.ray_dir_x;
+	cub->ray.wall_x -= floor(cub->ray.wall_x);
+	cub->ray.tex_x = (int)(cub->ray.wall_x * (double)TEXTURE_WIDTH);
+	if (cub->ray.side == 0 && cub->ray.ray_dir_x > 0)
+		cub->ray.tex_x = TEXTURE_WIDTH - cub->ray.tex_x - 1;
+	if (cub->ray.side == 1 && cub->ray.ray_dir_y < 0)
+		cub->ray.tex_x = TEXTURE_WIDTH - cub->ray.tex_x - 1;
 }
 
-void ft_set_pistol(t_game *cub)
+void	ft_draw(t_game *cub)
 {
-    char *color;
-	int x;
-	int y;
+	int	x;
+	int	y;
 
-	x = 0;
-	y = 0;
-	while(y < PISTOL_HEIGHT)
-	{
-		while(x < PISTOL_WIDTH)
-		{
-			color = cub->img.data_pistol + (y * cub->img.pistol_line_length + x * (cub->img.bits_per_pixel / 8));
-			unsigned int color_int = *(unsigned int*)color;
-			if(color_int != 0xFF000000) //0xFF000000 is the background color, we don't want to draw it, so we skip it
-				my_mlx_pixel_put(cub, x + (SCREEN_WIDTH - PISTOL_WIDTH) / 2, y + SCREEN_HEIGHT - PISTOL_HEIGHT, color_int);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-}
-
-void ft_set_scope(t_game *cub)
-{
-	char *color;
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	while(y < SCOPE_HEIGHT)
-	{
-		while(x < SCOPE_WIDTH)
-		{
-			color = cub->img.data_scope + (y * cub->img.scope_line_length + x * (cub->img.bits_per_pixel / 8));
-			unsigned int color_int = *(unsigned int*)color;
-			if(color_int != 0xFF000000) //0xFF000000 is the background color, we don't want to draw it, so we skip it
-				my_mlx_pixel_put(cub, x + (SCREEN_WIDTH - SCOPE_WIDTH) / 2, y + (SCREEN_HEIGHT - SCOPE_HEIGHT) / 2, color_int);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	x = -1;
+	y = -1;
+	ft_set_background(cub);
+	ft_set_text(cub);
+	ft_set_screen(cub);
+	if (!cub->flag.shoot_flag)
+		ft_set_pistol(cub);
+	else
+		ft_set_pistol_shoot(cub);
+	ft_set_scope(cub);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
+	ft_draw_mini(cub);
 }

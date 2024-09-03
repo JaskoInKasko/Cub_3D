@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/03 19:56:34 by iguliyev          #+#    #+#             */
+/*   Updated: 2024/09/03 22:23:44 by iguliyev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/Cub3D.h"
 
-void ft_start_game(t_game *cub)
+void	ft_start_game(t_game *cub)
 {
-   	cub->mlx = mlx_init();
+	cub->mlx = mlx_init();
 	if (cub->mlx == NULL)
 		ft_exit(cub, MLX_INT, EXIT_FAILURE);
-    cub->win = mlx_new_window(cub->mlx, SCREEN_WIDTH + 240, SCREEN_HEIGHT, "Wolfenstein 3D");
-    if(cub->win == NULL)
+	cub->win = mlx_new_window(cub->mlx,
+			SCREEN_WIDTH + 240, SCREEN_HEIGHT, "Wolfenstein 3D");
+	if (cub->win == NULL)
 		ft_exit(cub, MLX_WIN, EXIT_FAILURE);
 	ft_load_texture(cub);
 	ft_load_texture_data(cub);
@@ -21,7 +34,7 @@ void ft_start_game(t_game *cub)
 
 int	main(int argc, char *argv[])
 {
-	t_game cub;
+	t_game	cub;
 
 	if (argc == 2)
 	{

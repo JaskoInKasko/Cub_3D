@@ -1,23 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/03 20:21:16 by iguliyev          #+#    #+#             */
+/*   Updated: 2024/09/03 22:24:47 by iguliyev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/Cub3D.h"
 
-void ft_img_check(t_game *cub, char *path, void **img)
+void	ft_img_check(t_game *cub, char *path, void **img)
 {
-	int width;
-	int height;
+	int	width;
+	int	height;
 
 	*img = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
 	if (*img == NULL)
 		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
 }
 
-void ft_data_check(t_game *cub, void **img, char **data, int *line_length)
+void	ft_data_check(t_game *cub, void **img, char **data, int *line_length)
 {
-	*data = mlx_get_data_addr(*img, &cub->img.bits_per_pixel, line_length, &cub->img.endian);
+	*data = mlx_get_data_addr(*img, &cub->img.bpp,
+			line_length, &cub->img.endian);
 	if (data == NULL)
 		ft_exit(cub, MLX_DATA, EXIT_FAILURE);
 }
 
-void ft_load_texture(t_game *cub)
+void	ft_load_texture(t_game *cub)
 {
 	cub->img.img = mlx_new_image(cub->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (cub->img.img == NULL)
@@ -38,19 +51,30 @@ void ft_load_texture(t_game *cub)
 	ft_img_check(cub, "./textures/mini_black.xpm", &cub->img.mini_black);
 }
 
-void ft_load_texture_data(t_game *cub)
+void	ft_load_texture_data(t_game *cub)
 {
-	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
+	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bpp,
+			&cub->img.line_length, &cub->img.endian);
 	if (cub->img.addr == NULL)
 		ft_exit(cub, MLX_DATA, EXIT_FAILURE);
-	ft_data_check(cub, &cub->img.north, &cub->img.data_north, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.south, &cub->img.data_south, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.east, &cub->img.data_east, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.west, &cub->img.data_west, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.hitler, &cub->img.data_hitler, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.door, &cub->img.data_door, &cub->img.tex_line_length);
-	ft_data_check(cub, &cub->img.pistol, &cub->img.data_pistol, &cub->img.pistol_line_length);
-	ft_data_check(cub, &cub->img.pistol_shoot, &cub->img.data_pistol_shoot, &cub->img.pistol_line_length);
-	ft_data_check(cub, &cub->img.scope, &cub->img.data_scope, &cub->img.scope_line_length);
-	ft_data_check(cub, &cub->img.enemy, &cub->img.data_enemy, &cub->img.tex_line_length);
+	ft_data_check(cub, &cub->img.north,
+		&cub->img.data_north, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.south,
+		&cub->img.data_south, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.east,
+		&cub->img.data_east, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.west,
+		&cub->img.data_west, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.hitler,
+		&cub->img.data_hitler, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.door,
+		&cub->img.data_door, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.pistol,
+		&cub->img.data_pistol, &cub->img.pistol_line_length);
+	ft_data_check(cub, &cub->img.pistol_shoot,
+		&cub->img.data_pistol_shoot, &cub->img.pistol_line_length);
+	ft_data_check(cub, &cub->img.scope,
+		&cub->img.data_scope, &cub->img.scope_line_length);
+	ft_data_check(cub, &cub->img.enemy,
+		&cub->img.data_enemy, &cub->img.t_line_len);
 }
