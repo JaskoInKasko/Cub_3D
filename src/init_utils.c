@@ -187,7 +187,7 @@ void	get_int_value(t_game *cub, int i)
 			cub->tmp.n = cub->tmp.n + tmp[cub->tmp.i2] - 48;
 		if (tmp[cub->tmp.i2 + 1] >= '0' && tmp[cub->tmp.i2 + 1] <= '9')
 			cub->tmp.n *= 10;
-		if (tmp[cub->tmp.i2 + 1] == ',')
+		if (tmp[cub->tmp.i2 + 1] == ',' || tmp[cub->tmp.i2 + 1] == '\0')
 		{
 			if (!ft_strncmp(cub->map.map_info[i], "F ", 2))
 				cub->map.f_rgb[cub->tmp.i3] = cub->tmp.n;
@@ -227,6 +227,18 @@ int create_rgb(int r, int g, int b)
     return (r << 16) | (g << 8) | b;
 }
 
+void	check_rgb_int_value(t_game *cub)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 3)
+	{
+		if ((cub->map.f_rgb[i] < 0 || cub->map.f_rgb[i] > 255)
+			|| (cub->map.c_rgb[i] < 0 || cub->map.c_rgb[i] > 255))
+			ft_exit(cub, RGB, EXIT_FAILURE);
+	}
+}
 
 void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
 {
@@ -249,6 +261,7 @@ void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
 		cub->tmp.i3 = 0;
 		cub->tmp.n = 0;
 		get_int_value(cub, i);
+		check_rgb_int_value(cub);
 	}
 }
 

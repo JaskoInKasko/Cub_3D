@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_3D_H
-# define CUB_3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 //		LIBRARIES
 
@@ -76,6 +76,8 @@
 # define MAP_SIZE       "Error: lack of elements in Map!\n"
 # define DOOR           "Error: Door has no connecting point between 2 walls!\n"
 # define EXTENTION      "Error: Mapfile has wrong extention!\n"
+# define RGB			"Error: wrong rgb value!\n"
+
 
 //      INFORMATION
 # define ESC       "You pressed ESC. Game Over!\n" 
