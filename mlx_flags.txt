@@ -1,1 +1,0 @@
--lmlx -lX11 -lXext
