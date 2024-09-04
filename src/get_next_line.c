@@ -10,7 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/Cub3D.h"
+
+static void	ft_free_here(t_game *cub, char *backup, char *buffer, char *msg)
+{
+	if (backup)
+	{
+		free(backup);
+		backup = NULL;
+	}
+	if (buffer)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
+	ft_exit(cub, msg, EXIT_FAILURE);
+}
+
+static void	ft_first_read(t_game *cub, char **backup, char *buffer)
+{
+	*backup = ft_strdup_get("");
+	if (!*backup)
+		ft_free_here(cub, buffer, NULL, MALLOC);
+}
 
 static char	*doer(t_game *cub, int fd, char *buffer, char *backup)
 {
@@ -22,24 +44,24 @@ static char	*doer(t_game *cub, int fd, char *buffer, char *backup)
 	{
 		read_num = read(fd, buffer, BUFFER_SIZE);
 		if (read_num < 0)
-			return (NULL);
+			ft_free_here(cub, backup, buffer,
+				"Error: read() function failed!\n");
 		else if (read_num == 0)
 			return (backup);
 		buffer[read_num] = '\0';
 		if (backup == NULL)
-			backup = ft_strdup_get("");
+			ft_first_read(cub, &backup, buffer);
 		temp = backup;
 		backup = ft_strjoin_get(temp, buffer);
 		if (!backup)
-			return (NULL);
-		free(temp);
-		temp = NULL;
+			ft_free_here(cub, temp, buffer, MALLOC);
+		ft_free(temp);
 		if (ft_strchr_get(buffer, '\n'))
 			return (backup);
 	}
 }
 
-static char	*grab(char *line)
+static char	*grab(t_game *cub, char *line)
 {
 	size_t	count;
 	char	*backup;
@@ -50,12 +72,18 @@ static char	*grab(char *line)
 	if (line[count] == '\0')
 		return (NULL);
 	backup = ft_substr_get(line, count + 1, ft_strlen_get(line) - count);
+	if (!backup)
+	{
+		free(line);
+		ft_exit(cub, MALLOC, EXIT_FAILURE);
+	}
 	if (*backup == '\0')
 	{
 		free(backup);
 		backup = NULL;
 	}
 	line[count + 1] = '\0';
+	cub->flag.backup = backup;
 	return (backup);
 }
 
@@ -67,24 +95,24 @@ char	*get_next_line(t_game *cub, int fd)
 
 	if (fd < 0)
 		ft_exit(cub, OPEN, EXIT_FAILURE);
-	if(BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0)
 		ft_exit(cub, "Error: Invalid BUFFER_SIZE!\n", EXIT_FAILURE);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!buffer)
+	{
+		free(backup);
 		ft_exit(cub, MALLOC, EXIT_FAILURE);
+	}
 	line = doer(cub, fd, buffer, backup);
 	if (line == NULL)
 	{
 		free(backup);
 		backup = NULL;
-		free(buffer);
-		buffer = NULL;
-		ft_exit(cub, "Error: get_next_line() function failed!\n", EXIT_FAILURE);
 	}
 	free(buffer);
 	buffer = NULL;
 	if (line)
-		backup = grab(line);
+		backup = grab(cub, line);
 	return (line);
 }
 /*

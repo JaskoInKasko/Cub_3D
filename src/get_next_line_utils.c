@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/Cub3D.h"
 
 char	*ft_strchr_get(const char *s, int c)
 {
@@ -95,7 +95,8 @@ char	*ft_strjoin_get(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	m = (char *)malloc(sizeof(char) * (ft_strlen_get(s1) + ft_strlen_get(s2) + 1));
+	m = (char *)malloc(sizeof(char) * (ft_strlen_get(s1)
+				+ ft_strlen_get(s2) + 1));
 	if (m == NULL)
 		return (NULL);
 	while (s1[i])

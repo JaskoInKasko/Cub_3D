@@ -86,7 +86,6 @@ int	line_is_valid(t_game *cub, int i)
 			return (1);
 		}
 	}
-	i2 = -1;
 	ft_free_double(tmp);
 	return (0);
 }

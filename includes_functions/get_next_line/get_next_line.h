@@ -3,27 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsakanov <jsakanov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 13:04:56 by jsakanov          #+#    #+#             */
-/*   Updated: 2023/10/13 13:21:18 by jsakanov         ###   ########.fr       */
+/*   Created: 2023/11/01 06:01:24 by iguliyev          #+#    #+#             */
+/*   Updated: 2023/11/01 14:39:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# include <stdio.h>
 # include <unistd.h>
-# include <stdlib.h>
-# include <sys/stat.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <string.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 10
 # endif
 
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-size_t	ft_strlen_gnl(const char *str);
-char	*ft_strchr_gnl(char *s, int c);
-char	*ft_strdup_gnl(const char *s);
+char	*ft_strchr_get(const char *s, int c);
+size_t	ft_strlen_get(const char *s);
+char	*ft_strdup_get(const char *src);
+char	*ft_substr_get(const char *s, unsigned int start, size_t len);
+char	*ft_strjoin_get(char const *s1, char const *s2);
+char	*get_next_line(t_game *cub, int fd);
 
 #endif
