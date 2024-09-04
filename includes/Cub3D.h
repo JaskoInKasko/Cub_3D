@@ -292,4 +292,6 @@ void	rotate(t_game *cub, double angle);
 int		ft_mouse_move(int x, int y, t_game *cub);
 int		ft_mouse_click(int button, int x, int y, t_game *cub);
 
+void	ft_free_double(char **ptr);
+
 #endif

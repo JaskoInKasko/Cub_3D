@@ -17,6 +17,9 @@ void	ft_texture_img_check(t_game *cub, char *path, void **img)
 	int	width;
 	int	height;
 
+	width = 0;
+	height = 0;
+
 	*img = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
 	if (width != 64 || height != 64)
 		ft_exit(cub, TEXTURE_SIZE, EXIT_FAILURE);
@@ -28,6 +31,9 @@ void	ft_img_check(t_game *cub, char *path, void **img)
 {
 	int	width;
 	int	height;
+
+	width = 0;
+	height = 0;
 
 	*img = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
 	if (*img == NULL)

@@ -75,14 +75,19 @@ int	line_is_valid(t_game *cub, int i)
 	char	**tmp;
 
 	tmp = ft_split(cub->map.map_info[i], ' ');
+	if (!tmp)
+		ft_exit(cub, MALLOC, EXIT_FAILURE);
 	i2 = -1;
 	while (tmp[++i2])
+	{
 		if (i2 > 1)
+		{
+			ft_free_double(tmp);
 			return (1);
+		}
+	}
 	i2 = -1;
-	while (tmp[++i2])
-		free(tmp[i2]);
-	free(tmp);
+	ft_free_double(tmp);
 	return (0);
 }
 
