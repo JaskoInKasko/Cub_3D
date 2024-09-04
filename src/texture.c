@@ -12,6 +12,18 @@
 
 #include "../includes/Cub3D.h"
 
+void	ft_texture_img_check(t_game *cub, char *path, void **img)
+{
+	int	width;
+	int	height;
+
+	*img = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
+	if (width != 64 || height != 64)
+		ft_exit(cub, TEXTURE_SIZE, EXIT_FAILURE);
+	if (*img == NULL)
+		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
+}
+
 void	ft_img_check(t_game *cub, char *path, void **img)
 {
 	int	width;
@@ -35,16 +47,16 @@ void	ft_load_texture(t_game *cub)
 	cub->img.img = mlx_new_image(cub->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (cub->img.img == NULL)
 		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
-	ft_img_check(cub, cub->map.north, &cub->img.north);
-	ft_img_check(cub, cub->map.south, &cub->img.south);
-	ft_img_check(cub, cub->map.east, &cub->img.east);
-	ft_img_check(cub, cub->map.west, &cub->img.west);
-	ft_img_check(cub, "./textures/hitler.xpm", &cub->img.hitler);
-	ft_img_check(cub, "./textures/door.xpm", &cub->img.door);
+	ft_texture_img_check(cub, cub->map.north, &cub->img.north);
+	ft_texture_img_check(cub, cub->map.south, &cub->img.south);
+	ft_texture_img_check(cub, cub->map.east, &cub->img.east);
+	ft_texture_img_check(cub, cub->map.west, &cub->img.west);
+	ft_texture_img_check(cub, "./textures/hitler.xpm", &cub->img.hitler);
+	ft_texture_img_check(cub, "./textures/door.xpm", &cub->img.door);
 	ft_img_check(cub, "./textures/pistol.xpm", &cub->img.pistol);
 	ft_img_check(cub, "./textures/pistol_shoot.xpm", &cub->img.pistol_shoot);
 	ft_img_check(cub, "./textures/scope.xpm", &cub->img.scope);
-	ft_img_check(cub, "./textures/enemy.xpm", &cub->img.enemy);
+	ft_texture_img_check(cub, "./textures/enemy.xpm", &cub->img.enemy);
 	ft_img_check(cub, "./textures/mini_floor.xpm", &cub->img.mini_floor);
 	ft_img_check(cub, "./textures/mini_wall.xpm", &cub->img.mini_wall);
 	ft_img_check(cub, "./textures/mini_player.xpm", &cub->img.mini_player);

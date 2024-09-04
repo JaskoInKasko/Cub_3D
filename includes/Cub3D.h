@@ -72,6 +72,7 @@
 # define DOOR			"Error: Door has no connecting point between 2 walls!\n"
 # define EXTENTION		"Error: Mapfile has wrong extention!\n"
 # define RGB			"Error: wrong rgb value!\n"
+# define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 
