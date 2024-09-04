@@ -245,6 +245,8 @@ void	check_map_content(t_game *cub);
 //		FINISH
 void	ft_exit(t_game *cub, char *msg, int exit_status);
 void	ft_free_all(t_game *cub);
+void	ft_free_double(char **ptr);
+void	ft_free(char *ptr);
 
 //		SET_TEXTURE
 void	ft_load_texture(t_game *cub);
@@ -292,6 +294,5 @@ void	rotate(t_game *cub, double angle);
 int		ft_mouse_move(int x, int y, t_game *cub);
 int		ft_mouse_click(int button, int x, int y, t_game *cub);
 
-void	ft_free_double(char **ptr);
 
 #endif

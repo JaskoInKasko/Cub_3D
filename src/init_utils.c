@@ -59,14 +59,17 @@ static int	read_loop(t_game *cub, int line_read)
 			break ;
 		line_read++;
 		if (has_tab(line) == 0)
+		{
+			ft_free(line);
 			ft_exit(cub, TAB, EXIT_FAILURE);
+		}
 		if (line[0] == '\n' && cub->flag.mapline_flag == 1)
 		{
-			free(line);
+			ft_free(line);
 			ft_exit(cub, EMPTY_M, EXIT_FAILURE);
 		}
 		join_fileinfo(cub, line);
-		free(line);
+		ft_free(line);
 	}
 	return (line_read);
 }
