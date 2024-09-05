@@ -48,6 +48,9 @@ static void	ft_f_pressed(t_game *cub)
 	}
 	if (cub->map.map_filled[(int)c_y][(int)(c_x)] == 'D')
 		cub->map.map_filled[(int)c_y][(int)(c_x)] = '0';
+	ft_draw(cub);
+	usleep(100000);
+	cub->flag.shoot_flag = 0;
 }
 
 int	ft_key_pressed(int keysym, t_game *cub)

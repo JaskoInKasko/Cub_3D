@@ -80,10 +80,10 @@ void	ft_calculate_vars_values_for_draw_part2(t_game *cub)
 {
 	if (cub->ray.side == 0)
 		cub->ray.perp_wall_dist = (cub->ray.map_x - cub->player.pos_x
-				+ (1 - cub->ray.step_x) / 2) / cub->ray.ray_dir_x;
+				+ (1.0 - cub->ray.step_x) / 2) / cub->ray.ray_dir_x;
 	else
 		cub->ray.perp_wall_dist = (cub->ray.map_y - cub->player.pos_y
-				+ (1 - cub->ray.step_y) / 2) / cub->ray.ray_dir_y;
+				+ (1.0 - cub->ray.step_y) / 2) / cub->ray.ray_dir_y;
 	cub->ray.line_height = (int)(SCREEN_HEIGHT / cub->ray.perp_wall_dist);
 	cub->ray.draw_start = -cub->ray.line_height / 2 + SCREEN_HEIGHT / 2;
 	if (cub->ray.draw_start < 0)
