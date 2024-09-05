@@ -32,10 +32,17 @@
 
 // # include "../minilibx-linux/mlx.h"
 
+# ifndef EXTRA_WIDTH
+#  define EXTRA_WIDTH 0
+# endif
+
+# ifndef FLAG
+#  define FLAG 0
+# endif
+
 //		DEFAULT_VALUES
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
-# define EXTRA_WIDTH 240
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
 # define MINI_TEX_WIDTH 10

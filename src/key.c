@@ -48,9 +48,6 @@ static void	ft_f_pressed(t_game *cub)
 	}
 	if (cub->map.map_filled[(int)c_y][(int)(c_x)] == 'D')
 		cub->map.map_filled[(int)c_y][(int)(c_x)] = '0';
-	ft_draw(cub);
-	usleep(100000);
-	cub->flag.shoot_flag = 0;
 }
 
 int	ft_key_pressed(int keysym, t_game *cub)
@@ -67,9 +64,9 @@ int	ft_key_pressed(int keysym, t_game *cub)
 		rotate(cub, -cub->angle);
 	else if (keysym == XK_Right)
 		rotate(cub, cub->angle);
-	else if (keysym == XK_space)
+	else if (keysym == XK_space && FLAG)
 		ft_space_pressed(cub);
-	else if (keysym == XK_f)
+	else if (keysym == XK_f && FLAG)
 		ft_f_pressed(cub);
 	else if (keysym == XK_Escape)
 		ft_exit(cub, ESC, EXIT_SUCCESS);

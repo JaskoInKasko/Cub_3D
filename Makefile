@@ -16,6 +16,9 @@ MLX_PATH = ./minilibx-linux
 
 all: $(NAME)
 
+bonus: CFLAGS += -DEXTRA_WIDTH=240 -DFLAG=1
+bonus: all
+
 $(NAME): $(OBJ) $(FT_PRINTF) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(FT_PRINTF) $(LIBFT) -L$(MLX_PATH) -lmlx -L/usr/lib -lXext -lX11 -lm -o $(NAME)
 
