@@ -113,13 +113,13 @@ void	ft_draw(t_game *cub)
 	x = -1;
 	y = -1;
 	ft_set_background(cub);
-	ft_set_text(cub);
 	ft_set_screen(cub);
+	ft_set_scope(cub);
+	ft_draw_mini(cub);
 	if (!cub->flag.shoot_flag)
 		ft_set_pistol(cub);
 	else
 		ft_set_pistol_shoot(cub);
-	ft_set_scope(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
-	ft_draw_mini(cub);
+	ft_set_text(cub);
 }

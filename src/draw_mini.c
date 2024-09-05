@@ -50,26 +50,42 @@ static void	ft_calculate_start_and_end_for_mini_part1(t_game *cub)
 	}
 }
 
+static void	ft_pixel_put_helper(t_game *cub, int x, int y, int color)
+{
+	int	m;
+	int	n;
+
+	m = 0;
+	n = 0;
+	while (m < 10)
+	{
+		n = 0;
+		while (n < 10)
+		{
+			my_mlx_pixel_put(cub, x + n, y + m, color);
+			n++;
+		}
+		m++;
+	}
+}
+
 static void	ft_put_image_to_window_for_mini(t_game *cub)
 {
+	int	x;
+	int	y;
+
+	x = cub->mini.x * MINI_TEX_WIDTH + SCREEN_WIDTH;
+	y = cub->mini.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2);
 	if ((int)cub->player.pos_x == cub->mini.start_x
 		&& (int)cub->player.pos_y == cub->mini.start_y)
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_player,
-			cub->mini.x * MINI_TEX_WIDTH + SCREEN_WIDTH,
-			cub->mini.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+		ft_pixel_put_helper(cub, x, y, 0x00FF00);
 	else if (cub->map.map_filled[cub->mini.start_y][cub->mini.start_x] == '0'
 		|| cub->map.map_filled[cub->mini.start_y][cub->mini.start_x] == 'O')
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_floor,
-			cub->mini.x * MINI_TEX_WIDTH + SCREEN_WIDTH,
-			cub->mini.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+		ft_pixel_put_helper(cub, x, y, 0x6C4824);
 	else if (cub->map.map_filled[cub->mini.start_y][cub->mini.start_x] != ' ')
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_wall,
-			cub->mini.x * MINI_TEX_WIDTH + SCREEN_WIDTH,
-			cub->mini.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+		ft_pixel_put_helper(cub, x, y, 0x382C14);
 	else
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black,
-			cub->mini.x * MINI_TEX_WIDTH + SCREEN_WIDTH,
-			cub->mini.y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+		ft_pixel_put_helper(cub, x, y, 0x000000);
 }
 
 void	ft_draw_mini(t_game *cub)

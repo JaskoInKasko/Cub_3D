@@ -37,6 +37,24 @@ void	ft_set_text(t_game *cub)
 		"@ Ismayil && Jasmin");
 }
 
+static void	ft_pixel_put_background(t_game *cub, int x, int y, int color)
+{
+	int	m;
+	int	n;
+
+	m = 0;
+	while (m < 10)
+	{
+		n = 0;
+		while (n < 10)
+		{
+			my_mlx_pixel_put(cub, x + n, y + m, color);
+			n++;
+		}
+		m++;
+	}
+}
+
 void	ft_set_mini_background(t_game *cub)
 {
 	int	x;
@@ -48,9 +66,8 @@ void	ft_set_mini_background(t_game *cub)
 	{
 		while (x < MINIMAP_SIZE)
 		{
-			mlx_put_image_to_window(cub->mlx, cub->win, cub->img.mini_black,
-				x * MINI_TEX_WIDTH + SCREEN_WIDTH,
-				y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2));
+			ft_pixel_put_background(cub, x * MINI_TEX_WIDTH + SCREEN_WIDTH,
+				y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2), 0x000000);
 			x++;
 		}
 		x = 0;
