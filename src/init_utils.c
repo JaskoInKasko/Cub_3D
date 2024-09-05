@@ -54,15 +54,16 @@ static int	read_loop(t_game *cub, int line_read)
 
 	while (1)
 	{
-		line = get_next_line(cub->map.fd);
+		line = get_next_line(cub, cub->map.fd);
+		if (cub->flag.read_flag == 1)
+			ft_exit(cub, READ, EXIT_FAILURE);
+		else if (cub->flag.malloc_flag == 1)
+			ft_exit(cub, MALLOC, EXIT_FAILURE);
 		if (!line)
 			break ;
 		line_read++;
 		if (has_tab(line) == 0)
-		{
-			ft_free(line);
-			ft_exit(cub, TAB, EXIT_FAILURE);
-		}
+			return (ft_free(line), ft_exit(cub, TAB, EXIT_FAILURE), 1);
 		if (line[0] == '\n' && cub->flag.mapline_flag == 1)
 		{
 			ft_free(line);

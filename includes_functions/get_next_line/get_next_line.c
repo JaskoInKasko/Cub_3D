@@ -10,134 +10,74 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../includes/Cub3D.h"
 
-static char	*doer(t_game *cub, int fd, char *buffer, char *backup)
+static int	ft_line_len(char *str)
 {
-	int		read_num;
-	char	*temp;
+	int		i;
 
-	read_num = 1;
-	while (1)
-	{
-		read_num = read(fd, buffer, BUFFER_SIZE);
-		if (read_num < 0)
-			return (NULL);
-		else if (read_num == 0)
-			return (backup);
-		buffer[read_num] = '\0';
-		if (backup == NULL)
-			backup = ft_strdup_get("");
-		temp = backup;
-		backup = ft_strjoin_get(temp, buffer);
-		if (!backup)
-			return (NULL);
-		free(temp);
-		temp = NULL;
-		if (ft_strchr_get(buffer, '\n'))
-			return (backup);
-	}
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	return (i);
 }
 
-static char	*grab(char *line)
+static char	*ft_read_str(t_game *cub, char *buffer, int fd)
 {
-	size_t	count;
-	char	*backup;
+	ssize_t	readb;
+	char	*str;
 
-	count = 0;
-	while (line[count] != '\n' && line[count] != '\0')
-		count++;
-	if (line[count] == '\0')
+	readb = 1;
+	str = ft_strdup_gnl(cub, buffer);
+	if (!str)
 		return (NULL);
-	backup = ft_substr_get(line, count + 1, ft_strlen_get(line) - count);
-	if (*backup == '\0')
+	while (readb > 0 && !ft_strchr_gnl(buffer, '\n'))
 	{
-		free(backup);
-		backup = NULL;
+		readb = read(fd, buffer, BUFFER_SIZE);
+		if (readb == -1)
+		{
+			free(str);
+			buffer[0] = '\0';
+			cub->flag.read_flag = 1;
+			return (NULL);
+		}
+		buffer[readb] = '\0';
+		str = ft_strjoin_gnl(cub, str, buffer);
+		if (str == NULL)
+			buffer[0] = '\0';
+		if (str == NULL)
+			break ;
 	}
-	line[count + 1] = '\0';
-	return (backup);
+	return (str);
 }
 
 char	*get_next_line(t_game *cub, int fd)
 {
-	char		*line;
-	char		*buffer;
-	static char	*backup;
+	char		*str;
+	int			zero;
+	static char	rest[BUFFER_SIZE + 1] = "";
+	int			i;
 
-	if (fd < 0)
-		ft_exit(cub, OPEN, EXIT_FAILURE);
-	if(BUFFER_SIZE <= 0)
-		ft_exit(cub, "Error: Invalid BUFFER_SIZE!\n", EXIT_FAILURE);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
-	if (!buffer)
-		ft_exit(cub, MALLOC, EXIT_FAILURE);
-	line = doer(cub, fd, buffer, backup);
-	if (line == NULL)
+	i = 0;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	str = ft_read_str(cub, rest, fd);
+	if (str == NULL)
+		return (NULL);
+	if (str[0] == '\0')
+		return (free(str), NULL);
+	zero = ft_line_len(str);
+	while (str[zero] && str[zero + i] != '\0')
 	{
-		free(backup);
-		backup = NULL;
-		free(buffer);
-		buffer = NULL;
-		ft_exit(cub, "Error: get_next_line() function failed!\n", EXIT_FAILURE);
+		rest[i] = str[zero + i];
+		i++;
 	}
-	free(buffer);
-	buffer = NULL;
-	if (line)
-		backup = grab(line);
-	return (line);
+	str[zero] = '\0';
+	rest[i] = '\0';
+	str[ft_strlen_gnl(str)] = '\0';
+	if (!str)
+		return (NULL);
+	return (str);
 }
-/*
-int main (void)
-{
-	char	*line;
-	int my_fd;
-	my_fd = open("my_file.txt", O_RDONLY);
-	line = get_next_line(my_fd);
-    printf("1. %s", line);// 1
-	line = get_next_line(my_fd);
-	printf("2. %s", line);// 2
-    line = get_next_line(my_fd);
-    printf("3. %s", line);// 3
-    line = get_next_line(my_fd);
-    printf("4. %s", line);// 4
-    line = get_next_line(my_fd);
-    printf("5. %s", line);// 5
-    line = get_next_line(my_fd);
-    printf("6. %s", line);// 6
-    line = get_next_line(my_fd);
-    printf("7. %s", line);// 7
-    line = get_next_line(my_fd);
-    printf("8. %s", line);// 8
-    line = get_next_line(my_fd);
-    printf("9. %s", line);// 9
-    line = get_next_line(my_fd);
-    printf("10. %s", line);// 10
-    line = get_next_line(my_fd);
-    printf("11. %s", line);// 11
-    line = get_next_line(my_fd);
-    printf("12. %s", line);// 12
-    line = get_next_line(my_fd);
-    printf("13. %s", line);// 13
-    line = get_next_line(my_fd);
-    printf("14. %s", line);// 14
-    line = get_next_line(my_fd);
-    printf("15. %s", line);// 15
-    // line = myway(my_fd);
-    // printf("16. %s\n\n", line);// 16
-    // line = myway(my_fd);
-    // printf("17. %s\n\n", line);// 17
-    // line = myway(my_fd);
-    // printf("18. %s\n\n", line);// 18
-    // line = myway(my_fd);
-    // printf("19. %s\n\n", line);// 19
-    // line = myway(my_fd);
-    // printf("20. %s\n\n", line);// 20
-    // line = myway(my_fd);
-    // printf("21. %s\n\n", line);// 21
-    // line = myway(my_fd);
-    // printf("22. %s\n\n", line);// 22
-    // line = myway(my_fd);
-    // printf("23. %s\n\n", line);// 23
-    return(0);
-}*/

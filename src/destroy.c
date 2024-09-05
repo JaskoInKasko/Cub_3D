@@ -45,7 +45,7 @@ void	ft_destroy_imgs(t_game *cub)
 	ft_destroy_single_img(cub, cub->img.south);
 	ft_destroy_single_img(cub, cub->img.east);
 	ft_destroy_single_img(cub, cub->img.west);
-	ft_destroy_single_img(cub, cub->img.hitler);
+	ft_destroy_single_img(cub, cub->img.paper);
 	ft_destroy_single_img(cub, cub->img.door);
 	ft_destroy_single_img(cub, cub->img.pistol);
 	ft_destroy_single_img(cub, cub->img.pistol_shoot);

@@ -25,13 +25,11 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-
 //		INC_LIBRARIES
 # include "../includes_functions/libft/libft.h"
 # include "../includes_functions/ft_printf/ft_printf.h"
+# include "../includes_functions/get_next_line/get_next_line.h"
+
 // # include "../minilibx-linux/mlx.h"
 
 //		DEFAULT_VALUES
@@ -76,6 +74,7 @@
 # define EXTENTION		"Error: Mapfile has wrong extention!\n"
 # define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
+# define READ			"Error: read() in get_next_line() failed!\n"
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 
@@ -91,7 +90,7 @@ typedef struct s_img
 	void	*pistol;
 	void	*pistol_shoot;
 	void	*scope;
-	void	*hitler;
+	void	*paper;
 	void	*door;
 	void	*enemy;
 	void	*mini_floor;
@@ -106,7 +105,7 @@ typedef struct s_img
 	char	*data_pistol;
 	char	*data_pistol_shoot;
 	char	*data_scope;
-	char	*data_hitler;
+	char	*data_paper;
 	char	*data_door;
 	char	*data_enemy;
 	int		bpp;
@@ -160,7 +159,8 @@ typedef struct s_flag
 	int	success_flag;
 	int	shoot_flag;
 	int	close_flag;
-	char	*backup;
+	int	malloc_flag;
+	int	read_flag;
 }				t_flag;
 
 typedef struct s_tmp
@@ -298,12 +298,10 @@ void	rotate(t_game *cub, double angle);
 int		ft_mouse_move(int x, int y, t_game *cub);
 int		ft_mouse_click(int button, int x, int y, t_game *cub);
 
-char	*ft_strchr_get(const char *s, int c);
-size_t	ft_strlen_get(const char *s);
-char	*ft_strdup_get(const char *src);
-char	*ft_substr_get(const char *s, unsigned int start, size_t len);
-char	*ft_strjoin_get(char const *s1, char const *s2);
 char	*get_next_line(t_game *cub, int fd);
-
+char	*ft_strjoin_gnl(t_game *cub, char *s1, char *s2);
+size_t	ft_strlen_gnl(const char *str);
+char	*ft_strchr_gnl(char *s, int c);
+char	*ft_strdup_gnl(t_game *cub, const char *s);
 
 #endif

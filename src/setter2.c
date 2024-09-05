@@ -105,7 +105,7 @@ void	ft_define_pixel_color_for_draw(t_game *cub, int y)
 		cub->ray.color = cub->img.data_east + (cub->ray.tex_y
 				* cub->img.t_line_len + cub->ray.tex_x * (cub->img.bpp / 8));
 	else if (cub->map.map_filled[cub->ray.map_y][cub->ray.map_x] == 'H')
-		cub->ray.color = cub->img.data_hitler + (cub->ray.tex_y
+		cub->ray.color = cub->img.data_paper + (cub->ray.tex_y
 				* cub->img.t_line_len + cub->ray.tex_x * (cub->img.bpp / 8));
 	else if (cub->ray.side == 0 && cub->ray.ray_dir_x < 0
 		&& cub->map.map_filled[cub->ray.map_y][cub->ray.map_x] == '1')

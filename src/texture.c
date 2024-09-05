@@ -55,7 +55,7 @@ void	ft_load_texture(t_game *cub)
 	ft_texture_img_check(cub, cub->map.south, &cub->img.south);
 	ft_texture_img_check(cub, cub->map.east, &cub->img.east);
 	ft_texture_img_check(cub, cub->map.west, &cub->img.west);
-	ft_texture_img_check(cub, "./textures/hitler.xpm", &cub->img.hitler);
+	ft_texture_img_check(cub, "./textures/eagle.xpm", &cub->img.paper);
 	ft_texture_img_check(cub, "./textures/door.xpm", &cub->img.door);
 	ft_img_check(cub, "./textures/pistol.xpm", &cub->img.pistol);
 	ft_img_check(cub, "./textures/pistol_shoot.xpm", &cub->img.pistol_shoot);
@@ -81,8 +81,8 @@ void	ft_load_texture_data(t_game *cub)
 		&cub->img.data_east, &cub->img.t_line_len);
 	ft_data_check(cub, &cub->img.west,
 		&cub->img.data_west, &cub->img.t_line_len);
-	ft_data_check(cub, &cub->img.hitler,
-		&cub->img.data_hitler, &cub->img.t_line_len);
+	ft_data_check(cub, &cub->img.paper,
+		&cub->img.data_paper, &cub->img.t_line_len);
 	ft_data_check(cub, &cub->img.door,
 		&cub->img.data_door, &cub->img.t_line_len);
 	ft_data_check(cub, &cub->img.pistol,

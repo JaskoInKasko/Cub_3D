@@ -37,7 +37,6 @@ void	ft_free_double(char **ptr)
 
 void	ft_free_all(t_game *cub)
 {
-	ft_free(cub->flag.backup);
 	ft_free(cub->map.line_cpy);
 	ft_free(cub->map.mapline);
 	ft_free_double(cub->map.map_filled);
