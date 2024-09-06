@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CFLAGS_BONUS = -Wall -Wextra -Werror -g
 HEAD = ft_printf.h
 SRC = src/main.c src/inits_allocs.c src/init_utils.c src/init_utils2.c\

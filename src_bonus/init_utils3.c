@@ -21,17 +21,15 @@ static void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
 {
 	if (!ft_strncmp(cub->map.map_info[i], "WE ", 3))
 	{
-		cub->map.west = cub->map.map_info[i];
 		cub->map.west = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
 		if (cub->map.west == NULL)
-			ft_exit(cub, TOKEN, EXIT_FAILURE);
+			ft_exit(cub, MALLOC, EXIT_FAILURE);
 	}
 	else if (!ft_strncmp(cub->map.map_info[i], "EA ", 3))
 	{
-		cub->map.east = cub->map.map_info[i];
 		cub->map.east = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
 		if (cub->map.east == NULL)
-			ft_exit(cub, TOKEN, EXIT_FAILURE);
+			ft_exit(cub, MALLOC, EXIT_FAILURE);
 	}
 	else if (!ft_strncmp(cub->map.map_info[i], "F ", 2)
 		|| !ft_strncmp(cub->map.map_info[i], "C ", 2))
@@ -90,17 +88,15 @@ void	get_addition_mapinfo(t_game *cub)
 		check_for_spaces(cub, i);
 		if (!ft_strncmp(cub->map.map_info[i], "NO ", 3))
 		{
-			cub->map.north = cub->map.map_info[i];
 			cub->map.north = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
 			if (cub->map.north == NULL)
-				ft_exit(cub, TOKEN, EXIT_FAILURE);
+				ft_exit(cub, MALLOC, EXIT_FAILURE);
 		}
 		else if (!ft_strncmp(cub->map.map_info[i], "SO ", 3))
 		{
-			cub->map.south = cub->map.map_info[i];
 			cub->map.south = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
 			if (cub->map.south == NULL)
-				ft_exit(cub, TOKEN, EXIT_FAILURE);
+				ft_exit(cub, MALLOC, EXIT_FAILURE);
 		}
 		get_addition_mapinfo_extended(cub, tmp, i);
 	}

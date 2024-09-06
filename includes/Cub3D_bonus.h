@@ -74,6 +74,7 @@
 # define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
 # define READ			"Error: read() in get_next_line() failed!\n"
+# define CLOSE			"Error: close() function failed!\n"	
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 
