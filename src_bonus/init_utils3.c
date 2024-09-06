@@ -14,7 +14,7 @@
 
 static int	create_rgb(int r, int g, int b)
 {
-	return ((r << 16) | (g << 8) | b);
+	return ((r << 16) | (g << 8) | b); 
 }
 
 static void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
