@@ -40,6 +40,7 @@ static void	ft_f_pressed(t_game *cub)
 	c_x = cub->player.pos_x;
 	c_y = cub->player.pos_y;
 	cub->flag.shoot_flag = 1;
+	mlx_loop_hook(cub->mlx, ft_animation, cub);
 	while (cub->map.map_filled[(int)c_y][(int)(c_x)] == '0'
 		|| cub->map.map_filled[(int)c_y][(int)(c_x)] == 'O')
 	{
@@ -70,6 +71,8 @@ int	ft_key_pressed(int keysym, t_game *cub)
 		ft_f_pressed(cub);
 	else if (keysym == XK_Escape)
 		ft_exit(cub, ESC, EXIT_SUCCESS);
+	else
+		return (0);
 	ft_draw(cub);
 	return (0);
 }

@@ -26,7 +26,7 @@ int	ft_animation(t_game *cub)
 			{
 				cub->flag.shoot_flag = 0;
 				ft_draw(cub);
-				break ;
+				return (0);
 			}
 			i++;
 		}
