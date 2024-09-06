@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Cub3D.h"
+#include "../includes/Cub3D_bonus.h"
 
 void	ft_texture_img_check(t_game *cub, char *path, void **img)
 {
@@ -49,7 +49,7 @@ void	ft_data_check(t_game *cub, void **img, char **data, int *line_length)
 void	ft_load_texture(t_game *cub)
 {
 	cub->img.img = mlx_new_image(cub->mlx,
-			SCREEN_WIDTH, SCREEN_HEIGHT);
+			SCREEN_WIDTH + EXTRA_WIDTH, SCREEN_HEIGHT);
 	if (cub->img.img == NULL)
 		ft_exit(cub, MLX_IMG, EXIT_FAILURE);
 	ft_texture_img_check(cub, cub->map.north, &cub->img.north);

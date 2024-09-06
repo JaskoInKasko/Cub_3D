@@ -10,7 +10,70 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Cub3D.h"
+#include "../includes/Cub3D_bonus.h"
+
+void	ft_set_text(t_game *cub)
+{
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 20, 0x00FFFFFF, "Welcome to Cub3D!");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 60, 0x00FFFFFF, "Controls:");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 80, 0x00FFFFFF, "Move: W, A, S, D or Mouse");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 100, 0x00FFFFFF, "Rotate: Left Arrow, Right Arrow");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 120, 0x00FFFFFF, "Exit: ESC or X Button");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 140, 0x00FFFFFF, "Shoot: F or Right Click");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 160, 0x00FFFFFF, "Open Door: Space");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 180, 0x00FFFFFF, "Close Door: Space");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, 200, 0x00FFFFFF, "Enjoy the game!");
+	mlx_string_put(cub->mlx, cub->win,
+		SCREEN_WIDTH + 15, SCREEN_HEIGHT / 2 - 10, 0x00FFFFFF,
+		"@ Ismayil && Jasmin");
+}
+
+static void	ft_pixel_put_background(t_game *cub, int x, int y, int color)
+{
+	int	m;
+	int	n;
+
+	m = 0;
+	while (m < 10)
+	{
+		n = 0;
+		while (n < 10)
+		{
+			my_mlx_pixel_put(cub, x + n, y + m, color);
+			n++;
+		}
+		m++;
+	}
+}
+
+void	ft_set_mini_background(t_game *cub)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < MINIMAP_SIZE)
+	{
+		while (x < MINIMAP_SIZE)
+		{
+			ft_pixel_put_background(cub, x * MINI_TEX_WIDTH + SCREEN_WIDTH,
+				y * MINI_TEX_HEIGHT + (SCREEN_HEIGHT / 2), 0x000000);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
 
 void	ft_set_background(t_game *cub)
 {

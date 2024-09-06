@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 //		LIBRARIES
 
@@ -33,6 +33,7 @@
 //		DEFAULT_VALUES
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
+# define EXTRA_WIDTH 240
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
 # define MINI_TEX_WIDTH 10
@@ -73,7 +74,6 @@
 # define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
 # define READ			"Error: read() in get_next_line() failed!\n"
-# define CLOSE			"Error: close() function failed!\n"	
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Cub3D.h"
+#include "../includes/Cub3D_bonus.h"
 
 static void	split_and_close(t_game *cub)
 {
@@ -28,6 +28,7 @@ static void	split_and_close(t_game *cub)
 		ft_exit(cub, CLOSE, EXIT_FAILURE);
 	cub->flag.close_flag = 1;
 }
+
 
 static void	check_map_size(t_game *cub)
 {
