@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsakanov <jsakanov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/09/02 17:57:55 by jsakanov         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:41:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <mlx.h>
+// # include <mlx.h>
 # include <math.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -29,6 +29,7 @@
 # include "../includes_functions/libft/libft.h"
 # include "../includes_functions/ft_printf/ft_printf.h"
 # include "../includes_functions/get_next_line/get_next_line.h"
+# include "../minilibx/mlx.h"
 
 //		DEFAULT_VALUES
 # define SCREEN_WIDTH 640

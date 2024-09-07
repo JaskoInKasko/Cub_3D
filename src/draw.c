@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:53:13 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/03 22:22:04 by iguliyev         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:40:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ void	ft_calculate_vars_values_for_draw_part2(t_game *cub)
 
 void	ft_draw(t_game *cub)
 {
-	int	x;
-	int	y;
-
-	x = -1;
-	y = -1;
 	ft_set_background(cub);
 	ft_set_screen(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);

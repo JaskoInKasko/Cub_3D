@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:43:33 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/03 22:23:00 by iguliyev         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:40:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ int	has_tab(char *line)
 
 static int	is_map_line(const char *line)
 {
-	int	i;
-
-	i = -1;
 	if (*line != '1' && *line != '0' && *line != 'N'
 		&& *line != 'S' && *line != 'W' && *line != 'E'
 		&& *line != ' ' && *line != 'D' && *line != 'C'
