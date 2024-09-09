@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/09/07 23:41:25 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/09 14:00:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-// # include <mlx.h>
+# include <mlx.h>
 # include <math.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -29,7 +29,6 @@
 # include "../includes_functions/libft/libft.h"
 # include "../includes_functions/ft_printf/ft_printf.h"
 # include "../includes_functions/get_next_line/get_next_line.h"
-# include "../minilibx/mlx.h"
 
 //		DEFAULT_VALUES
 # define SCREEN_WIDTH 640
@@ -69,7 +68,6 @@
 # define TOKEN			"Error: unrecognized token in cubfile!\n"
 # define ELEMENT		"Error: Map elements are not complete!\n"
 # define MAP_SIZE		"Error: lack of elements in Map!\n"
-# define DOOR			"Error: Door has no connecting point between 2 walls!\n"
 # define EXTENTION		"Error: Mapfile has wrong extention!\n"
 # define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"

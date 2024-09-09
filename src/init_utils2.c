@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:43:33 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/07 23:40:17 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/09 13:43:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ static int	is_map_line(const char *line)
 {
 	if (*line != '1' && *line != '0' && *line != 'N'
 		&& *line != 'S' && *line != 'W' && *line != 'E'
-		&& *line != ' ' && *line != 'D' && *line != 'C'
-		&& *line != 'O' && *line != 'H')
+		&& *line != ' ')
 		return (1);
 	line++;
 	while (*(line) != '\0' && *(line + 1) != '\n')
 	{
 		if (*line != '1' && *line != '0' && *line != 'N'
 			&& *line != 'S' && *line != 'W' && *line != 'E'
-			&& *line != ' ' && *line != 'D' && *line != 'C'
-			&& *line != 'O' && *line != 'H')
+			&& *line != ' ')
 			return (1);
 		line++;
 	}

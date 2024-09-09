@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iguliyev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:08:14 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/03 22:24:06 by iguliyev         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:49:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,15 @@ int	get_mapline_begin(t_game *cub, int i, int i2)
 	return (begin);
 }
 
-void	check_if_door_between_walls(t_game *cub, int i, int i2)
-{
-	if (cub->map.map_filled[i][i2] == 'C' || cub->map.map_filled[i][i2] == 'O')
-	{
-		if (cub->map.map_filled[i][i2 + 1] == '1'
-			&& cub->map.map_filled[i][i2 - 1] == '1')
-			return ;
-		else if (cub->map.map_filled[i + 1][i2] == '1'
-			&& cub->map.map_filled[i - 1][i2] == '1')
-			return ;
-		else
-			ft_exit(cub, DOOR, EXIT_FAILURE);
-	}
-}
-
 void	loop_through_map(t_game *cub, int i, int i2)
 {
 	while (cub->map.map_filled[i][++i2])
 	{
 		if (cub->map.map_filled[i][i2] == '0'
-			|| cub->map.map_filled[i][i2] == 'D'
-			|| cub->map.map_filled[i][i2] == 'C'
-			|| cub->map.map_filled[i][i2] == 'O'
-			|| cub->map.map_filled[i][i2] == 'H')
+			|| cub->map.map_filled[i][i2] == 'N'
+			|| cub->map.map_filled[i][i2] == 'S'
+			|| cub->map.map_filled[i][i2] == 'E'
+			|| cub->map.map_filled[i][i2] == 'W')
 		{
 			if (i == 0 || (i > 0 && cub->map.map_filled[i - 1]
 					&& (!cub->map.map_filled[i - 1][i2]
@@ -66,7 +51,6 @@ void	loop_through_map(t_game *cub, int i, int i2)
 					|| cub->map.map_filled[i][i2 - 1] == ' ')
 				ft_exit(cub, WALL, EXIT_FAILURE);
 		}
-		check_if_door_between_walls(cub, i, i2);
 	}
 }
 
