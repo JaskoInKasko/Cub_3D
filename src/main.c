@@ -39,8 +39,8 @@ int	main(int argc, char *argv[])
 		init_structs(&cub, argv);
 		check_map_walls(&cub);
 		check_map_content(&cub);
-		/* ft_start_game(&cub);
-		ft_exit(&cub, NULL, EXIT_SUCCESS); */
+		// ft_start_game(&cub);
+		ft_exit(&cub, NULL, EXIT_SUCCESS);
 	}
 	else
 		ft_putstr_fd(INV_ARGS, 2);

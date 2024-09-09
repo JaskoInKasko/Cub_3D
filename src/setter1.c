@@ -35,7 +35,7 @@ void	ft_set_screen(t_game *cub)
 		ft_find_hit_point(cub);
 		ft_calculate_vars_values_for_draw_part2(cub);
 		y = cub->ray.draw_start;
-		while (y < cub->ray.draw_end)
+		while (y <= cub->ray.draw_end)
 		{
 			ft_define_pixel_color_for_draw(cub, y);
 			my_mlx_pixel_put(cub, x, y, cub->ray.color_int);

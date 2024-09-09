@@ -4,7 +4,7 @@ SO    ./textures/brick.xpm
 
 WE ./textures/grey.xpm     
 
-EA   ./textures/wood.xpmm
+EA   ./textures/wood.xpm
 
 F 220,00100,0
 
