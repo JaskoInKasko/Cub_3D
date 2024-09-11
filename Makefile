@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS_BONUS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -O0
+CFLAGS_BONUS = -Wall -Wextra -Werror
 HEAD = ft_printf.h
 SRC = src/main.c src/inits_allocs.c src/init_utils.c src/init_utils2.c\
 src/init_utils3.c src/parser.c src/parser_utils.c src/finish.c\
@@ -22,17 +22,16 @@ NAME = cub3D
 NAME_BONUS = cub3D_bonus
 FT_PRINTF = ./includes_functions/ft_printf/libftprintf.a
 LIBFT = ./includes_functions/libft/libft.a
-MLX_PATH = ./minilibx-linux
 
 all: $(NAME)
 
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJ_BONUS) $(FT_PRINTF) $(LIBFT)
-	@$(CC) $(CFLAGS_BONUS) $(OBJ_BONUS) $(FT_PRINTF) $(LIBFT) -L$(MLX_PATH) -lmlx -L/usr/lib -lXext -lX11 -lm -o $(NAME_BONUS)
+	@$(CC) $(CFLAGS_BONUS) $(OBJ_BONUS) $(FT_PRINTF) $(LIBFT) -lmlx -lXext -lX11 -lm -o $(NAME_BONUS)
 
 $(NAME): $(OBJ) $(FT_PRINTF) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) $(FT_PRINTF) $(LIBFT) -L$(MLX_PATH) -lmlx -L/usr/lib -lXext -lX11 -lm -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(FT_PRINTF) $(LIBFT) -lmlx -lXext -lX11 -lm -o $(NAME)
 
 $(FT_PRINTF):
 	@$(MAKE) -C includes_functions/ft_printf --no-print-directory

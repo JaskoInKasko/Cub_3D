@@ -107,7 +107,6 @@ void	ft_calculate_vars_values_for_draw_part2(t_game *cub)
 
 void	ft_draw(t_game *cub)
 {
-	ft_set_background(cub);
 	ft_set_screen(cub);
 	ft_set_scope(cub);
 	ft_draw_mini(cub);

@@ -14,7 +14,7 @@
 
 static void	split_and_close(t_game *cub)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	cub->map.map_filled = ft_split(cub->map.mapline, '\n');

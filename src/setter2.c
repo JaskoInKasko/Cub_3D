@@ -12,27 +12,13 @@
 
 #include "../includes/Cub3D.h"
 
-void	ft_set_background(t_game *cub)
+void	my_mlx_pixel_put(t_game *cub, int x, int y, int color)
 {
-	int	x;
-	int	y;
+	char	*dst;
 
-	x = -1;
-	y = -1;
-	while (++y < SCREEN_HEIGHT)
-	{
-		if (y < SCREEN_HEIGHT / 2)
-		{
-			while (++x < SCREEN_WIDTH)
-				my_mlx_pixel_put(cub, x, y, cub->map.c_color);
-		}
-		else
-		{
-			while (++x < SCREEN_WIDTH)
-				my_mlx_pixel_put(cub, x, y, cub->map.f_color);
-		}
-		x = 0;
-	}
+	dst = cub->img.addr
+		+ (y * cub->img.line_length + x * (cub->img.bpp / 8));
+	*(unsigned int *)dst = color;
 }
 
 	// if (cub->ray.side == 1)

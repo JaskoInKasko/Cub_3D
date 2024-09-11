@@ -12,6 +12,15 @@
 
 #include "../includes/Cub3D_bonus.h"
 
+void	my_mlx_pixel_put(t_game *cub, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = cub->img.addr
+		+ (y * cub->img.line_length + x * (cub->img.bpp / 8));
+	*(unsigned int *)dst = color;
+}
+
 void	ft_set_text(t_game *cub)
 {
 	mlx_string_put(cub->mlx, cub->win,
@@ -72,29 +81,6 @@ void	ft_set_mini_background(t_game *cub)
 		}
 		x = 0;
 		y++;
-	}
-}
-
-void	ft_set_background(t_game *cub)
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	y = -1;
-	while (++y < SCREEN_HEIGHT)
-	{
-		if (y < SCREEN_HEIGHT / 2)
-		{
-			while (++x < SCREEN_WIDTH)
-				my_mlx_pixel_put(cub, x, y, cub->map.c_color);
-		}
-		else
-		{
-			while (++x < SCREEN_WIDTH)
-				my_mlx_pixel_put(cub, x, y, cub->map.f_color);
-		}
-		x = 0;
 	}
 }
 

@@ -14,7 +14,7 @@
 
 static int	create_rgb(int r, int g, int b)
 {
-	return ((r << 16) | (g << 8) | b); 
+	return ((r << 16) | (g << 8) | b);
 }
 
 static void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
@@ -75,30 +75,29 @@ static void	check_element_completness(t_game *cub)
 
 void	get_addition_mapinfo(t_game *cub)
 {
-	int		i;
-	char	*tmp;
-
-	i = -1;
+	cub->tmp.i = -1;
 	check_element_completness(cub);
-	while (cub->map.map_info[++i])
+	while (cub->map.map_info[++cub->tmp.i])
 	{
-		if (line_is_valid(cub, i) == 1)
+		if (line_is_valid(cub, cub->tmp.i) == 1)
 			ft_exit(cub, TOKEN, EXIT_FAILURE);
-		tmp = cub->map.map_info[i];
-		check_for_spaces(cub, i);
-		if (!ft_strncmp(cub->map.map_info[i], "NO ", 3))
+		check_for_spaces(cub, cub->tmp.i);
+		if (!ft_strncmp(cub->map.map_info[cub->tmp.i], "NO ", 3))
 		{
-			cub->map.north = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
+			cub->map.north = ft_substr(cub->map.map_info[cub->tmp.i],
+					cub->tmp.s_b, cub->tmp.s_a);
 			if (cub->map.north == NULL)
 				ft_exit(cub, MALLOC, EXIT_FAILURE);
 		}
-		else if (!ft_strncmp(cub->map.map_info[i], "SO ", 3))
+		else if (!ft_strncmp(cub->map.map_info[cub->tmp.i], "SO ", 3))
 		{
-			cub->map.south = ft_substr(tmp, cub->tmp.s_b, cub->tmp.s_a);
+			cub->map.south = ft_substr(cub->map.map_info[cub->tmp.i],
+					cub->tmp.s_b, cub->tmp.s_a);
 			if (cub->map.south == NULL)
 				ft_exit(cub, MALLOC, EXIT_FAILURE);
 		}
-		get_addition_mapinfo_extended(cub, tmp, i);
+		get_addition_mapinfo_extended(cub, cub->map.map_info[cub->tmp.i],
+			cub->tmp.i);
 	}
 	get_rgb_color(cub);
 }

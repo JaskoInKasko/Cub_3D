@@ -75,14 +75,14 @@ static void	ft_check_if_move_is_possible(t_game *cub)
 	{
 		if (cub->ray.side_dist_x < cub->ray.side_dist_y)
 		{
-			if (cub->ray.side_dist_x >= SPEED + 0.2)
+			if (cub->ray.side_dist_x >= SPEED + 0.6)
 				break ;
 			cub->ray.side_dist_x += cub->ray.delta_dist_x;
 			cub->ray.map_x += cub->ray.step_x;
 		}
 		else
 		{
-			if (cub->ray.side_dist_y >= SPEED + 0.2)
+			if (cub->ray.side_dist_y >= SPEED + 0.6)
 				break ;
 			cub->ray.side_dist_y += cub->ray.delta_dist_y;
 			cub->ray.map_y += cub->ray.step_y;

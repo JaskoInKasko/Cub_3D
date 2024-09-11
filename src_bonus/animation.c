@@ -22,7 +22,7 @@ int	ft_animation(t_game *cub)
 		ft_draw(cub);
 		while (1)
 		{
-			if (i == 1000000000)
+			if (i == 100000000)
 			{
 				cub->flag.shoot_flag = 0;
 				ft_draw(cub);

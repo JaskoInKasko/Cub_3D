@@ -168,6 +168,7 @@ typedef struct s_tmp
 	int	s_b;
 	int	s_a;
 	int	n;
+	int	i;
 }				t_tmp;
 
 typedef struct s_ray
@@ -277,7 +278,6 @@ void	ft_set_pistol(t_game *cub);
 void	ft_set_scope(t_game *cub);
 void	ft_set_text(t_game *cub);
 void	ft_set_mini_background(t_game *cub);
-void	ft_set_background(t_game *cub);
 void	ft_define_pixel_color_for_draw(t_game *cub, int y);
 
 //		DRAW

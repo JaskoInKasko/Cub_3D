@@ -107,7 +107,6 @@ void	ft_calculate_vars_values_for_draw_part2(t_game *cub)
 
 void	ft_draw(t_game *cub)
 {
-	ft_set_background(cub);
 	ft_set_screen(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
 }
