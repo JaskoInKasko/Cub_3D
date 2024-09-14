@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:43:33 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/09 13:43:03 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/14 19:07:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,10 @@ int	line_is_valid(t_game *cub, int i)
 		ft_exit(cub, MALLOC, EXIT_FAILURE);
 	i2 = -1;
 	while (tmp[++i2])
-	{
 		if (i2 > 1)
-		{
-			ft_free_double(tmp);
-			return (1);
-		}
-	}
+			return (ft_free_double(tmp), 1);
+	if (i2 == 1)
+		return (ft_free_double(tmp), 1);
 	ft_free_double(tmp);
 	return (0);
 }

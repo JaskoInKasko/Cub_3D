@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 21:03:29 by jsakanov          #+#    #+#             */
-/*   Updated: 2024/09/09 14:00:55 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/14 21:24:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "../includes_functions/libft/libft.h"
 # include "../includes_functions/ft_printf/ft_printf.h"
 # include "../includes_functions/get_next_line/get_next_line.h"
+
 
 //		DEFAULT_VALUES
 # define SCREEN_WIDTH 640
@@ -72,7 +73,8 @@
 # define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
 # define READ			"Error: read() in get_next_line() failed!\n"
-# define CLOSE			"Error: close() function failed!\n"	
+# define CLOSE			"Error: close() function failed!\n"
+# define DOUBLE			"Error: Double elements found in cubfile!\n"
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 
