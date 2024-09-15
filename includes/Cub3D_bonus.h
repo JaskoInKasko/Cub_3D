@@ -47,6 +47,7 @@
 # define SPEED 0.2
 
 //		ERROR MANAGEMENT
+# define ERROR			"Error: Check map file!\n"
 # define INV_ARGS		"Error: Wrong amount of Arguments. Expected 2!\n"
 # define MALLOC			"Error: Malloc() function failed!\n"
 # define STRDUP			"Error: ft_strdup() function failed!\n"
@@ -54,27 +55,15 @@
 # define GNL			"Error: get_next_line() function failed!\n"
 # define STRJOIN		"Error: ft_strjoin_free() function failed!\n"
 # define SPLIT			"Error: ft_split() function failed!\n"
-# define EMPTY_M		"Error: Empty line in map!\n"
-# define FILE			"Error: Map before identifier or invalid character!\n"
-# define WALL			"Error: Map must be surrounded by walls!\n"
-# define TAB			"Error: cubfile contains a Tab!\n"
-# define EMPTY_F		"Error: Empty file!\n"
-# define MAP			"Error: No map found!\n"
-# define PLAYER			"Error: More then one player in the game!\n"
 # define MLX_INT		"Error: mlx_init() function failed!\n"
 # define MLX_WIN		"Error: mlx_new_window() function failed!\n"
 # define MLX_IMG		"Error: mlx_xpm_file_to_image() function failed!\n"
 # define MLX_DATA		"Error: mlx_get_data_addr() function failed!\n"
 # define MLX_NEW_IMG	"Error: mlx_new_image() function failed!\n"
-# define TOKEN			"Error: unrecognized token in cubfile!\n"
-# define ELEMENT		"Error: Map elements are not complete!\n"
-# define MAP_SIZE		"Error: lack of elements in Map!\n"
 # define DOOR			"Error: Door has no connecting point between 2 walls!\n"
-# define EXTENTION		"Error: Mapfile has wrong extention!\n"
-# define RGB			"Error: wrong rgb value!\n"
 # define TEXTURE_SIZE	"Error: Texture size is not 64x64!\n"
 # define READ			"Error: read() in get_next_line() failed!\n"
-# define CLOSE			"Error: close() function failed!\n"	
+# define CLOSE			"Error: close() function failed!\n"
 
 //		INFORMATION
 # define ESC		"You pressed ESC. Game Over!\n" 

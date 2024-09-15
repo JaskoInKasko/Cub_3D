@@ -35,7 +35,7 @@ static void	get_addition_mapinfo_extended(t_game *cub, char *tmp, int i)
 		|| !ft_strncmp(cub->map.map_info[i], "C ", 2))
 	{
 		if (rgb_color_is_valid(cub, i) == 1)
-			ft_exit(cub, TOKEN, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 		cub->tmp.i2 = 0;
 		cub->tmp.i3 = 0;
 		cub->tmp.n = 0;
@@ -70,7 +70,7 @@ static void	check_element_completness(t_game *cub)
 			completness_flag++;
 	}
 	if (completness_flag != 6)
-		ft_exit(cub, ELEMENT, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 }
 
 void	get_addition_mapinfo(t_game *cub)
@@ -80,7 +80,7 @@ void	get_addition_mapinfo(t_game *cub)
 	while (cub->map.map_info[++cub->tmp.i])
 	{
 		if (line_is_valid(cub, cub->tmp.i) == 1)
-			ft_exit(cub, TOKEN, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 		check_for_spaces(cub, cub->tmp.i);
 		if (!ft_strncmp(cub->map.map_info[cub->tmp.i], "NO ", 3))
 		{

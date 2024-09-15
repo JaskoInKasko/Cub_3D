@@ -62,7 +62,7 @@ int	map_content_loop(t_game *cub, int i, int i2, int full_content)
 				if (full_content == 1)
 					full_content = 2;
 				if (cub->player.pos_x != 0 || cub->player.pos_y != 0)
-					ft_exit(cub, PLAYER, EXIT_FAILURE);
+					ft_exit(cub, ERROR, EXIT_FAILURE);
 				ft_define_direction(cub, cub->map.map_filled[i][i2]);
 				cub->player.pos_x = i2 + 0.51;
 				cub->player.pos_y = i + 0.51;
@@ -85,5 +85,5 @@ void	check_map_content(t_game *cub)
 	full_content = 0;
 	full_content = map_content_loop(cub, i, i2, full_content);
 	if (full_content != 2)
-		ft_exit(cub, MAP_SIZE, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 }

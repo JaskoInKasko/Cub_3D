@@ -50,7 +50,7 @@ static void	check_map_size(t_game *cub)
 		i2 = -1;
 	}
 	if (mapsize == 0)
-		ft_exit(cub, MAP, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 }
 
 static int	read_loop(t_game *cub, int line_read)
@@ -68,11 +68,11 @@ static int	read_loop(t_game *cub, int line_read)
 			break ;
 		line_read++;
 		if (has_tab(line) == 0)
-			return (ft_free(line), ft_exit(cub, TAB, EXIT_FAILURE), 1);
+			return (ft_free(line), ft_exit(cub, ERROR, EXIT_FAILURE), 1);
 		if (line[0] == '\n' && cub->flag.mapline_flag == 1)
 		{
 			ft_free(line);
-			ft_exit(cub, EMPTY_M, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 		}
 		join_fileinfo(cub, line);
 		ft_free(line);
@@ -88,9 +88,9 @@ static void	ft_map_extension(t_game *cub)
 	extension = ".cub";
 	file_extension = ft_strrchr(cub->map.map_name, '.');
 	if (!file_extension)
-		ft_exit(cub, EXTENTION, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 	if ((ft_strcmp(file_extension, extension)) != 0)
-		ft_exit(cub, EXTENTION, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 }
 
 void	get_cubfile_info(t_game *cub)
@@ -113,7 +113,7 @@ void	get_cubfile_info(t_game *cub)
 	}
 	line_read = read_loop(cub, line_read);
 	if (line_read == 0)
-		ft_exit(cub, EMPTY_F, EXIT_FAILURE);
+		ft_exit(cub, ERROR, EXIT_FAILURE);
 	split_and_close(cub);
 	check_map_size(cub);
 }

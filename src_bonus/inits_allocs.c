@@ -60,7 +60,7 @@ void	check_rgb_int_value(t_game *cub)
 	{
 		if ((cub->map.f_rgb[i] < 0 || cub->map.f_rgb[i] > 255)
 			|| (cub->map.c_rgb[i] < 0 || cub->map.c_rgb[i] > 255))
-			ft_exit(cub, RGB, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 	}
 }
 
