@@ -40,8 +40,8 @@ static int	check_rgb_format(char *tmp, int i2)
 		|| (tmp[i2] == ',' && tmp[i2 + 1] == '\0'))
 		return (1);
 	else if (tmp[i2] == '0' && tmp[i2 + 1]
-		&& ((tmp[i2 + 1] >= '1' && tmp[i2 + 1] <= '9')
-			&& (!(tmp[i2 - 1] >= '1' && tmp[i2 - 1] <= '9'))))
+		&& ((tmp[i2 + 1] >= '0' && tmp[i2 + 1] <= '9')
+			&& (!(tmp[i2 - 1] >= '0' && tmp[i2 - 1] <= '9'))))
 		return (1);
 	return (0);
 }
