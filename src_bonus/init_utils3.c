@@ -55,6 +55,7 @@ cub->map.c_rgb[1], cub->map.c_rgb[2]);
 static void	check_element_completness(t_game *cub)
 {
 	int	i;
+	int	i2;
 	int	completness_flag;
 
 	i = -1;
@@ -68,6 +69,10 @@ static void	check_element_completness(t_game *cub)
 			|| !ft_strncmp(cub->map.map_info[i], "F ", 2)
 			|| !ft_strncmp(cub->map.map_info[i], "C ", 2))
 			completness_flag++;
+		i2 = i;
+		while (cub->map.map_info[++i2])
+			if (!ft_strncmp(cub->map.map_info[i2], cub->map.map_info[i], 3))
+				ft_exit(cub, ERROR, EXIT_FAILURE);
 	}
 	if (completness_flag != 6)
 		ft_exit(cub, ERROR, EXIT_FAILURE);
