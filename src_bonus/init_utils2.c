@@ -55,7 +55,7 @@ void	join_fileinfo(t_game *cub, char *line)
 		if (cub->flag.mapline_flag == 1)
 		{
 			free(line);
-			ft_exit(cub, FILE, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 		}
 		cub->map.line_cpy = ft_strjoin_free(cub->map.line_cpy, line);
 	}
@@ -76,13 +76,10 @@ int	line_is_valid(t_game *cub, int i)
 		ft_exit(cub, MALLOC, EXIT_FAILURE);
 	i2 = -1;
 	while (tmp[++i2])
-	{
 		if (i2 > 1)
-		{
-			ft_free_double(tmp);
-			return (1);
-		}
-	}
+			return (ft_free_double(tmp), 1);
+	if (i2 == 1)
+		return (ft_free_double(tmp), 1);
 	ft_free_double(tmp);
 	return (0);
 }

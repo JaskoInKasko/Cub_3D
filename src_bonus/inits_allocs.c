@@ -29,6 +29,23 @@ void	check_for_spaces(t_game *cub, int i)
 	cub->tmp.s_a++;
 }
 
+static int	check_rgb_format(char *tmp, int i2)
+{
+	if (!((tmp[i2] >= '0' && tmp[i2] <= '9')
+			|| tmp[i2] == ',' || tmp[i2] == ' '))
+		return (1);
+	else if ((tmp[i2] == ',' && tmp[i2 + 1]
+			&& !(tmp[i2 + 1] >= '0' && tmp[i2 + 1] <= '9'))
+		|| (tmp[i2] == ',' && !(tmp[i2 - 1] >= '0' && tmp[i2 - 1] <= '9'))
+		|| (tmp[i2] == ',' && tmp[i2 + 1] == '\0'))
+		return (1);
+	else if (tmp[i2] == '0' && tmp[i2 + 1]
+		&& ((tmp[i2 + 1] >= '0' && tmp[i2 + 1] <= '9')
+			&& (!(tmp[i2 - 1] >= '0' && tmp[i2 - 1] <= '9'))))
+		return (1);
+	return (0);
+}
+
 int	rgb_color_is_valid(t_game *cub, int i)
 {
 	int		i2;
@@ -40,8 +57,7 @@ int	rgb_color_is_valid(t_game *cub, int i)
 	tmp = cub->map.map_info[i];
 	while (tmp[++i2])
 	{
-		if (!((tmp[i2] >= '0' && tmp[i2] <= '9')
-				|| tmp[i2] == ',' || tmp[i2] == ' '))
+		if (check_rgb_format(tmp, i2) == 1)
 			return (1);
 		if (tmp[i2] == ',')
 			colon++;
@@ -60,7 +76,7 @@ void	check_rgb_int_value(t_game *cub)
 	{
 		if ((cub->map.f_rgb[i] < 0 || cub->map.f_rgb[i] > 255)
 			|| (cub->map.c_rgb[i] < 0 || cub->map.c_rgb[i] > 255))
-			ft_exit(cub, RGB, EXIT_FAILURE);
+			ft_exit(cub, ERROR, EXIT_FAILURE);
 	}
 }
 
