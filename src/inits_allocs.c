@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 19:26:44 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/14 20:17:42 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:22:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ void	check_for_spaces(t_game *cub, int i)
 	cub->tmp.s_b = 0;
 	cub->tmp.s_a = 0;
 	i2 = 0;
-	while (cub->map.map_info[i][i2] != ' ')
+	while (cub->map.map_info[i][i2] && cub->map.map_info[i][i2] != ' ')
 		i2++;
-	while (cub->map.map_info[i][i2] == ' ')
+	while (cub->map.map_info[i][i2] && cub->map.map_info[i][i2] == ' ')
 		i2++;
 	cub->tmp.s_b = i2;
-	while (cub->map.map_info[i][++i2] && cub->map.map_info[i][i2] != ' ')
+	while (cub->map.map_info[i][i2] && cub->map.map_info[i][i2] != ' ')
+	{
 		cub->tmp.s_a++;
+		i2++;
+	}
 	cub->tmp.s_a++;
 }
 

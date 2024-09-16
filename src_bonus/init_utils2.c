@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 20:43:33 by iguliyev          #+#    #+#             */
-/*   Updated: 2024/09/09 13:57:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/16 17:29:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,28 @@ int	has_tab(char *line)
 	return (1);
 }
 
-static int	is_map_line(const char *line)
+static int	is_map_line(t_game *cub, const char *line)
 {
+	char *linecpy;
+
+	linecpy = ft_strtrim(line, " ");
+	if (!linecpy)
+		return (ft_free((char *)line), ft_free((char *)linecpy),
+			ft_exit(cub, MALLOC, EXIT_FAILURE), 1);
+	else if (ft_strncmp(line, linecpy, ft_strlen(line)) && linecpy[0] == '\n')
+		return (ft_free((char *)line), ft_free((char *)linecpy),
+			ft_exit(cub, ERROR, EXIT_FAILURE), 1);
+	ft_free((char *)linecpy);
 	if (*line != '1' && *line != '0' && *line != 'N'
-		&& *line != 'S' && *line != 'W' && *line != 'E'
-		&& *line != ' ' && *line != 'D' && *line != 'C'
-		&& *line != 'O' && *line != 'H')
+		&& *line != 'S' && *line != 'W' && *line != 'E' && *line != ' '
+		&& *line != 'D' && *line != 'C' && *line != 'O' && *line != 'H')
 		return (1);
 	line++;
 	while (*(line) != '\0' && *(line + 1) != '\n')
 	{
 		if (*line != '1' && *line != '0' && *line != 'N'
-			&& *line != 'S' && *line != 'W' && *line != 'E'
-			&& *line != ' ' && *line != 'D' && *line != 'C'
-			&& *line != 'O' && *line != 'H')
+			&& *line != 'S' && *line != 'W' && *line != 'E' && *line != ' '
+			&& *line != 'D' && *line != 'C' && *line != 'O' && *line != 'H')
 			return (1);
 		line++;
 	}
@@ -45,7 +53,7 @@ static int	is_map_line(const char *line)
 
 void	join_fileinfo(t_game *cub, char *line)
 {
-	if (is_map_line(line) == 0)
+	if (is_map_line(cub, line) == 0)
 	{
 		cub->map.mapline = ft_strjoin_free(cub->map.mapline, line);
 		cub->flag.mapline_flag = 1;
