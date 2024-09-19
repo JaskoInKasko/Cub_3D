@@ -45,10 +45,12 @@ int	ft_mouse_click(int button, int x, int y, t_game *cub)
 
 	(void)x;
 	(void)y;
+	system("aplay ./src_bonus/shoot.wav &");
 	if (button == 1)
 	{
 		c_x = cub->player.pos_x;
 		c_y = cub->player.pos_y;
+		cub->flag.shoot_flag = 1;
 		while (cub->map.map_filled[(int)c_y][(int)(c_x)] == '0'
 			|| cub->map.map_filled[(int)c_y][(int)(c_x)] == 'O')
 		{

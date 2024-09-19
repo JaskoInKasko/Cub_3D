@@ -28,6 +28,7 @@ void	ft_start_game(t_game *cub)
 	mlx_hook(cub->win, KeyPress, KeyPressMask, &ft_key_pressed, cub);
 	mlx_hook(cub->win, MotionNotify, PointerMotionMask, ft_mouse_move, cub);
 	mlx_mouse_hook(cub->win, ft_mouse_click, cub);
+	mlx_loop_hook(cub->mlx, ft_animation, cub);
 	mlx_loop(cub->mlx);
 }
 

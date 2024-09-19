@@ -14,22 +14,20 @@
 
 int	ft_animation(t_game *cub)
 {
-	size_t	i;
+	static size_t	i = 0;
 
-	i = 0;
 	if (cub->flag.shoot_flag == 1)
 	{
-		ft_draw(cub);
-		while (1)
+		if (i == 0)
+			ft_draw(cub);
+		if (i == 10000)
 		{
-			if (i == 100000000)
-			{
-				cub->flag.shoot_flag = 0;
-				ft_draw(cub);
-				return (0);
-			}
-			i++;
+			cub->flag.shoot_flag = 0;
+			i = 0;
+			ft_draw(cub);
+			return (0);
 		}
+		i++;
 	}
 	return (0);
 }

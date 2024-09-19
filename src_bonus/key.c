@@ -31,16 +31,15 @@ static void	ft_space_pressed(t_game *cub)
 		cub->map.map_filled[y][x] = 'C';
 }
 
-	// system("aplay ./src/shoot.wav &");
 static void	ft_f_pressed(t_game *cub)
 {
 	double	c_x;
 	double	c_y;
 
+	system("aplay ./src_bonus/shoot.wav &");
 	c_x = cub->player.pos_x;
 	c_y = cub->player.pos_y;
 	cub->flag.shoot_flag = 1;
-	mlx_loop_hook(cub->mlx, ft_animation, cub);
 	while (cub->map.map_filled[(int)c_y][(int)(c_x)] == '0'
 		|| cub->map.map_filled[(int)c_y][(int)(c_x)] == 'O')
 	{
