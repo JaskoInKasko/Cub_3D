@@ -25,7 +25,7 @@ int	has_tab(char *line)
 
 static int	is_map_line(t_game *cub, const char *line)
 {
-	char *linecpy;
+	char	*linecpy;
 
 	linecpy = ft_strtrim(line, " ");
 	if (!linecpy)
