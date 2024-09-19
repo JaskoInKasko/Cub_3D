@@ -71,7 +71,8 @@ static void	check_element_completness(t_game *cub)
 			completness_flag++;
 		i2 = i;
 		while (cub->map.map_info[++i2])
-			if (!ft_strncmp(cub->map.map_info[i2], cub->map.map_info[i], 3))
+			if (!ft_strncmp(cub->map.map_info[i2], cub->map.map_info[i], 3)
+				|| !ft_strncmp(cub->map.map_info[i2], cub->map.map_info[i], 2))
 				ft_exit(cub, ERROR, EXIT_FAILURE);
 	}
 	if (completness_flag != 6)
