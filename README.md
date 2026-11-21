@@ -20,12 +20,6 @@ The project includes:
 
 ## How to execute the project
 
-Navigate to the project directory:
-
-```bash
-cd Cub_3D
-```
-
 Compile the project using the Makefile:
 
 ```bash
