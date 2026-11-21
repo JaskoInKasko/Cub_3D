@@ -40,5 +40,9 @@ Additional Makefile commands:
 make clean
 make fclean
 make re
+make bonus
+make clean_bonus
+make fclean_bonus
+make bonus_re
 ```
 
